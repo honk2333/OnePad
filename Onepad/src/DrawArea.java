@@ -19,49 +19,52 @@ public class DrawArea extends JPanel {
     DrawPad drawpad = null;
     Drawing[] itemList = new Drawing[5000];// 绘制图形及相关参数全部存到该数组
 
-    int chooseni = 0;// 褰撳墠閫変腑鍥惧舰鐨勬暟缁勪笅鏍�
-    int x0, y0;//璁板綍绉诲姩鍥惧舰榧犳爣璧峰浣嶇疆
-    private int chosenStatus = 3;//璁剧疆榛樿鍩烘湰鍥惧舰鐘舵�佷负闅忕瑪鐢�
-    int index = 0;//褰撳墠宸茬粡缁樺埗鐨勫浘褰㈡暟鐩�
-    private Color color = Color.black;//褰撳墠鐢荤瑪鐨勯鑹�
-    int R, G, B;//鐢ㄦ潵瀛樻斁褰撳墠棰滆壊鐨勫僵鍊�
-    int f1, f2;//鐢ㄦ潵瀛樻斁褰撳墠瀛椾綋鐨勯鏍�
-    String style;// 瀛樻斁褰撳墠瀛椾綋
-    float stroke = 1.0f;//璁剧疆鐢荤瑪鐨勭矖缁� 锛岄粯璁ょ殑鏄� 1.0
+    int chooseni = 0;// 当前选中图形的数组下标
+    int x0, y0;//记录移动图形鼠标起始位置
+    private int chosenStatus = 3;//设置默认基本图形状态为随笔画
+    int index = 0;//当前已经绘制的图形数目
+    private Color color = Color.black;//当前画笔的颜色
+    int R, G, B;//用来存放当前颜色的彩值
+    int f1, f2;//用来存放当前字体的风格
+    String style;// 存放当前字体
+    float stroke = 1.0f;//设置画笔的粗细 ，默认的是 1.0
     JTextArea tarea = new JTextArea("");
     int tx, ty;
 
     DrawArea(DrawPad dp) {
         drawpad = dp;
         setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        // 鎶婇紶鏍囪缃垚鍗佸瓧褰�
-        setBackground(Color.white);// 璁剧疆缁樺埗鍖虹殑鑳屾櫙鏄櫧鑹�
-        addMouseListener(new MouseA());// 娣诲姞榧犳爣浜嬩欢
+        // 把鼠标设置成十字形
+        setBackground(Color.white);// 设置绘制区的背景是白色
+        addMouseListener(new MouseA());// 添加鼠标事件
         addMouseMotionListener(new MouseB());
         createNewitem();
     }
 
-    public void paintComponent(Graphics g) {// repaint()闇�瑕佽皟鐢�
+    public void paintComponent(Graphics g) {// repaint()需要调用
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         int j = 0;
         while (j <= index) {
             draw(g2d, itemList[j]);
             j++;
-        } // 灏唅temList鏁扮粍閲嶇敾涓�閬�
+        } // 将itemList数组重画一遍
     }
 
     void draw(Graphics2D g2d, Drawing i) {
-        i.draw(g2d);// 灏嗙敾绗斾紶鍒颁釜鍚勭被鐨勫瓙绫讳腑
+        i.draw(g2d);// 将画笔传到个各类的子类中
     }
 
-    //鏂板缓涓�涓浘褰㈢殑鍩烘湰鍗曞厓瀵硅薄鐨勭▼搴忔
+    //新建一个图形的基本单元对象的程序段
     void createNewitem() {
-        if (chosenStatus == 13)// 瀛椾綋鐨勮緭鍏ュ厜鏍囩浉搴旂殑璁剧疆涓烘枃鏈緭鍏ユ牸寮�
+        if (chosenStatus == 13)// 字体的输入光标相应的设置为文本输入格式
             setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
         else setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
-        switch (chosenStatus) {// button瑙﹀彂鏀瑰彉currentChoice鐨勫�硷紝鐢辨寰楀埌鍚勪簨浠剁殑鍏ュ彛
+        switch (chosenStatus) {// button触发改变currentChoice的值，由此得到各事件的入口
+            case 2:
+                itemList[index] = new Eraser();
+                break;
             case 3:
                 itemList[index] = new Pencil();
                 break;
@@ -95,8 +98,10 @@ public class DrawArea extends JPanel {
             case 13:
                 itemList[index] = new Word();
                 break;
-            /*case 14:
-                itemList[index] = new OilPaint();*/
+            case 14:
+
+                itemList[index] = new Eraser();
+                break;
         }
         if (chosenStatus >= 3 && chosenStatus <= 13) {
             itemList[index].type = chosenStatus;
@@ -108,27 +113,27 @@ public class DrawArea extends JPanel {
 
     }
 
-    public void setIndex(int x) {//璁剧疆index鐨勬帴鍙�
+    public void setIndex(int x) {//设置index的接口
         index = x;
     }
 
-    public int getIndex() {// 璇诲彇index鐨勬帴鍙�
+    public int getIndex() {// 读取index的接口
         return index;
     }
 
-    public void setColor(Color color)//璁剧疆棰滆壊鐨勫��
+    public void setColor(Color color)//设置颜色的值
     {
         this.color = color;
     }
 
-    public void setStroke(float f)//璁剧疆鐢荤瑪绮楃粏鐨勬帴鍙�
+    public void setStroke(float f)//设置画笔粗细的接口
     {
         stroke = f;
     }
 
-    public void chooseColor()//閫夋嫨褰撳墠棰滆壊
+    public void chooseColor()//选择当前颜色
     {
-        color = JColorChooser.showDialog(drawpad, "璇烽�夋嫨棰滆壊", color);
+        color = JColorChooser.showDialog(drawpad, "请选择颜色", color);
         try {
             R = color.getRed();
             G = color.getGreen();
@@ -152,9 +157,9 @@ public class DrawArea extends JPanel {
         itemList[index].B = B;
     }
 
-    public void changeColor()// 鏀瑰彉褰撳墠鍥剧墖鐨勯鑹�
+    public void changeColor()// 改变当前图片的颜色
     {
-        color = JColorChooser.showDialog(drawpad, "璇烽�夋嫨棰滆壊", color);
+        color = JColorChooser.showDialog(drawpad, "请选择颜色", color);
         try {
             R = color.getRed();
             G = color.getGreen();
@@ -169,10 +174,10 @@ public class DrawArea extends JPanel {
         itemList[chooseni].B = B;
     }
 
-    public void setStroke()//鐢荤瑪绮楃粏鐨勮皟鏁�
+    public void setStroke()//画笔粗细的调整
     {
         String input;
-        input = JOptionPane.showInputDialog("璇疯緭鍏ョ敾绗旂殑绮楃粏( >0 )");
+        input = JOptionPane.showInputDialog("请输入画笔的粗细( >0 )");
         try {
             stroke = Float.parseFloat(input);
 
@@ -184,10 +189,10 @@ public class DrawArea extends JPanel {
 
     }
 
-    public void changeStroke()// 鐢荤瑪绮楃粏鐨勬敼鍙橈紙涓昏閽堝绌哄績鍥惧舰銆佺洿绾裤�侀殢绗旂敾锛�
+    public void changeStroke()// 画笔粗细的改变（主要针对空心图形、直线、随笔画）
     {
         String input;
-        input = JOptionPane.showInputDialog("璇疯緭鍏ョ敾绗旂殑绮楃粏( >0 )");
+        input = JOptionPane.showInputDialog("请输入画笔的粗细( >0 )");
         try {
             stroke = Float.parseFloat(input);
 
@@ -199,15 +204,15 @@ public class DrawArea extends JPanel {
 
     }
 
-    public void setChosenStatus(int i)// 璁剧疆褰撳墠閫夋嫨锛坆utton瑙﹀彂鏃朵娇鐢級
+    public void setChosenStatus(int i)// 设置当前选择（button触发时使用）
     {
         chosenStatus = i;
     }
 
-    public void changeText() {//淇敼宸叉湁鏂囧瓧
+    public void changeText() {//修改已有文字
         String input;
-        input = JOptionPane.showInputDialog("璇疯緭鍏ヤ綘瑕佷慨鏀逛负鐨勬枃瀛�");
-        itemList[chooseni].s1 = input;//閲嶈閫変腑鏂囨湰妗嗙殑鍚勫弬鏁�
+        input = JOptionPane.showInputDialog("请输入你要修改为的文字");
+        itemList[chooseni].s1 = input;//重设选中文本框的各参数
         itemList[chooseni].type = f1 + f2;
         itemList[chooseni].s2 = style;
         itemList[chooseni].stroke = stroke;
@@ -216,7 +221,7 @@ public class DrawArea extends JPanel {
         itemList[chooseni].B = B;
     }
 
-    public void setFont(int i, int font)//璁剧疆瀛椾綋
+    public void setFont(int i, int font)//设置字体
     {
         if (i == 1) {
             f1 = font;
@@ -224,8 +229,8 @@ public class DrawArea extends JPanel {
             f2 = font;
     }
 
-    public void fillColor(Drawing nowdrawing) {// 濉厖
-        int choice = nowdrawing.gettypechoice();// 鐢ㄤ簬鍒ゆ柇濉厖鍥惧舰绫诲瀷
+    public void fillColor(Drawing nowdrawing) {// 填充
+        int choice = nowdrawing.gettypechoice();// 用于判断填充图形类型
         if (choice == 5) {
             itemList[chooseni] = new fillRect();
         } else if (choice == 7) {
@@ -244,74 +249,81 @@ public class DrawArea extends JPanel {
         itemList[chooseni].B = B;
     }
 
-    public void deletePaint(Drawing nowdrawing) {// 鍒犻櫎
+    public void deletePaint(Drawing nowdrawing) {// 删除
         int choice = nowdrawing.gettypechoice();
-        if (choice >= 3 && choice <= 13) {
+        if (choice >= 2 && choice <= 13) {
             itemList[chooseni] = new Line();
         }
     }
 
-    // 榧犳爣浜嬩欢MouseA绫荤户鎵夸簡MouseAdapter锛岀敤鏉ュ畬鎴愰紶鏍囩殑鍝嶅簲浜嬩欢鐨勬搷浣�
+    // 鼠标事件MouseA类继承了MouseAdapter，用来完成鼠标的响应事件的操作
     class MouseA extends MouseAdapter {
         public void mouseEntered(MouseEvent me) {
-            // 榧犳爣杩涘叆
-            drawpad.setStratBar("榧犳爣杩涘叆鍦細[" + me.getX() + " ," + me.getY() + "]");// 璁剧疆鐘舵�佹爮鎻愮ず
+            // 鼠标进入
+            drawpad.setStratBar("鼠标进入在：[" + me.getX() + " ," + me.getY() + "]");// 设置状态栏提示
         }
 
         public void mouseExited(MouseEvent me) {
-            // 榧犳爣閫�鍑�
-            drawpad.setStratBar("榧犳爣閫�鍑哄湪锛歔" + me.getX() + " ," + me.getY() + "]");
+            // 鼠标退出
+            drawpad.setStratBar("鼠标退出在：[" + me.getX() + " ," + me.getY() + "]");
         }
 
         public void mousePressed(MouseEvent me) {
-            // 榧犳爣鎸変笅
-            drawpad.setStratBar("榧犳爣鎸変笅鍦細[" + me.getX() + " ," + me.getY() + "]");
+            // 鼠标按下
+            drawpad.setStratBar("鼠标按下在：[" + me.getX() + " ," + me.getY() + "]");
             if (chosenStatus >= 15 && chosenStatus <= 21)
-            // 鍒犻櫎锛岀Щ鍔紝鏇存敼澶у皬锛屾洿鏀归鑹诧紝鏇存敼绾垮瀷锛屽～鍏呭叚绉嶆搷浣滈兘闇�瑕侀�夊畾鍥惧舰
+            // 删除，移动，更改大小，更改颜色，更改线型，填充六种操作都需要选定图形
             {
                 for (chooseni = index - 1; chooseni >= 0; chooseni--) {
-                    // 浠庡悗鍒板墠瀵绘壘褰撳墠榧犳爣鏄惁鍦ㄦ煇涓浘褰㈠唴閮�
+                    // 从后到前寻找当前鼠标是否在某个图形内部
                     if (itemList[chooseni].in(me.getX(), me.getY())) {
-                        if (chosenStatus == 16)// 绉诲姩鍥惧舰闇�瑕佽褰昿ress鏃剁殑鍧愭爣
+                        if (chosenStatus == 16)// 移动图形需要记录press时的坐标
                         {
                             x0 = me.getX();
                             y0 = me.getY();
                         }
-                        break;// 鍏跺畠鎿嶄綔鍙渶鎵惧埌currenti鍗冲彲
+                        break;// 其它操作只需找到currenti即可
                     }
                 }
-                if (chooseni >= 0) {// 鏈夊浘褰㈣閫変腑
-                    setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));// 鏇存敼榧犳爣鏍峰紡涓烘墜褰�
-                    if (chosenStatus == 20) {// 瑙﹀彂濉厖
+                if (chooseni >= 0) {// 有图形被选中
+                    setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));// 更改鼠标样式为手形
+                    if (chosenStatus == 20) {// 触发填充
                         fillColor(itemList[chooseni]);
-                        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));// 榧犳爣鏍峰紡鍙樺洖鍗佸瓧鑺�
+                        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));// 鼠标样式变回十字花
                         repaint();
-                    } else if (chosenStatus == 15) {// 瑙﹀彂鍒犻櫎
+                    } else if (chosenStatus == 15) {// 触发删除
                         deletePaint(itemList[chooseni]);
                         setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                         repaint();
-                    } else if (chosenStatus == 18) {// 鏀瑰彉宸叉湁鍥惧舰鐨勯鑹�
+                    } else if (chosenStatus == 18) {// 改变已有图形的颜色
                         changeColor();
                         repaint();
-                    } else if (chosenStatus == 19) {// 鏀瑰彉宸叉湁鍥惧舰鐨勭嚎鍨�
+                    } else if (chosenStatus == 19) {// 改变已有图形的线型
                         changeStroke();
                         repaint();
-                    } else if (chosenStatus == 21) {//鏀瑰彉宸叉湁鏂囧瓧
+                    } else if (chosenStatus == 21) {//改变已有文字
                         changeText();
                         repaint();
                     }
                 }
             } else {
                 itemList[index].x1 = itemList[index].x2 = me.getX();
-                itemList[index].y1 = itemList[index].y2 = me.getY();// x1,x2,y1,y2鍒濆鍖�
-                // 濡傛灉褰撳墠閫夋嫨涓洪殢绗旂敾鍒欒繘琛屼笅闈㈢殑鎿嶄綔
+                itemList[index].y1 = itemList[index].y2 = me.getY();// x1,x2,y1,y2初始化
+                // 如果当前选择为随笔画则进行下面的操作
                 if (chosenStatus == 3) {
                     itemList[index].x1 = itemList[index].x2 = me.getX();
                     itemList[index].y1 = itemList[index].y2 = me.getY();
                     index++;
-                    createNewitem();//鍒涘缓鏂扮殑鍥惧舰鐨勫熀鏈崟鍏冨璞�
+                    createNewitem();//创建新的图形的基本单元对象
                 }
-                //濡傛灉閫夋嫨鍥惧舰鐨勬枃瀛楄緭鍏ワ紝鍒欒繘琛屼笅闈㈢殑鎿嶄綔
+                //如果选择为擦除则进行下面的操作
+                if (chosenStatus == 2) {
+                    itemList[index].x1 = itemList[index].x2 = me.getX();
+                    itemList[index].y1 = itemList[index].y2 = me.getY();
+                    index++;
+                    createNewitem();//创建新的图形的基本单元对象
+                }
+                //如果选择图形的文字输入，则进行下面的操作
                 if (chosenStatus == 13) {
                     tx = me.getX();
                     ty = me.getY();
@@ -322,11 +334,11 @@ public class DrawArea extends JPanel {
         }
 
         public void mouseReleased(MouseEvent me) {
-            // 榧犳爣鏉惧紑
-            drawpad.setStratBar("榧犳爣鏉惧紑鍦細[" + me.getX() + " ," + me.getY() + "]");
-            if (chosenStatus == 16) {// 绉诲姩缁撴潫
+            // 鼠标松开
+            drawpad.setStratBar("鼠标松开在：[" + me.getX() + " ," + me.getY() + "]");
+            if (chosenStatus == 16) {// 移动结束
 
-                if (chooseni >= 0) {// 榧犳爣鎴愬姛閫夋嫨浜嗘煇涓浘褰�
+                if (chooseni >= 0) {// 鼠标成功选择了某个图形
                     itemList[chooseni].x1 = itemList[chooseni].x1 + me.getX() - x0;
                     itemList[chooseni].y1 = itemList[chooseni].y1 + me.getY() - y0;
                     itemList[chooseni].x2 = itemList[chooseni].x2 + me.getX() - x0;
@@ -334,59 +346,70 @@ public class DrawArea extends JPanel {
                     repaint();
                     setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 }
-            } else if (chosenStatus == 17) {// 鏀惧ぇ缂╁皬缁撴潫
-                if (chooseni >= 0) {// 榧犳爣鎴愬姛閫夋嫨浜嗘煇涓浘褰�
+            } else if (chosenStatus == 17) {// 放大缩小结束
+                if (chooseni >= 0) {// 鼠标成功选择了某个图形
                     itemList[chooseni].x2 = me.getX();
                     itemList[chooseni].y2 = me.getY();
                     repaint();
                     setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                 }
             } else {
-                if (chosenStatus == 3) {// 闅忕瑪鐢荤粯鍒剁粨鏉�
+                if (chosenStatus == 3) {// 随笔画绘制结束
                     itemList[index].x1 = me.getX();
-                    itemList[index].y1 = me.getY();
-                } else if (chosenStatus == 13) {// 鏂囨湰妗嗙粯鍒剁粨鏉�
-                    tarea.setBounds(Math.min(tx, me.getX()) + 130, Math.min(ty, me.getY()), Math.abs(tx - me.getX()), Math.abs(ty - me.getY()));//缁樺埗鏂囨湰妗�
+                    itemList[index].y1 = me.getY(); }
+                else if (chosenStatus == 2) {// 擦除绘制结束
+                    itemList[index].x1 = me.getX();
+                    itemList[index].y1 = me.getY(); }
+                else if (chosenStatus == 13) {// 文本框绘制结束
+                    tarea.setBounds(Math.min(tx, me.getX()) + 130, Math.min(ty, me.getY()), Math.abs(tx - me.getX()), Math.abs(ty - me.getY()));//绘制文本框
                     String input;
-                    input = JOptionPane.showInputDialog("璇疯緭鍏ヤ綘瑕佸啓鍏ョ殑鏂囧瓧");
+                    input = JOptionPane.showInputDialog("请输入你要写入的文字");
                     tarea.setText(input);
                     itemList[index].s1 = input;
-                    itemList[index].type = f1 + f2;//璁剧疆绮椾綋銆佹枩浣�
+                    itemList[index].type = f1 + f2;//设置粗体、斜体
                     itemList[index].x2 = me.getX();
                     itemList[index].y2 = me.getY();
-                    itemList[index].s2 = style;//璁剧疆瀛椾綋
+                    itemList[index].s2 = style;//设置字体
 
                     index++;
                     chosenStatus = 13;
-                    createNewitem();//鍒涘缓鏂扮殑鍥惧舰鐨勫熀鏈崟鍏冨璞�
+                    createNewitem();//创建新的图形的基本单元对象
                     repaint();
-                    tarea.setText("");//閲嶈鏂囨湰妗嗭紝涓轰笅涓�娆′娇鐢ㄥ仛鍑嗗
+                    tarea.setText("");//重设文本框，为下一次使用做准备
                     tarea.setBounds(tx, ty, 0, 0);
                 }
-                if (chosenStatus >= 3 && chosenStatus <= 12) {
+                if (chosenStatus >= 2 && chosenStatus <= 12) {
                     itemList[index].x2 = me.getX();
                     itemList[index].y2 = me.getY();
                     repaint();
                     index++;
-                    createNewitem();//鍒涘缓鏂扮殑鍥惧舰鐨勫熀鏈崟鍏冨璞�
+                    createNewitem();//创建新的图形的基本单元对象
                 }
             }
         }
     }
 
-    // 榧犳爣浜嬩欢MouseB缁ф壙浜哅ouseMotionAdapter锛岀敤鏉ュ鐞嗛紶鏍囩殑婊氬姩涓庢嫋鍔�
+    // 鼠标事件MouseB继承了MouseMotionAdapter，用来处理鼠标的滚动与拖动
     class MouseB extends MouseMotionAdapter {
-        public void mouseDragged(MouseEvent me)//榧犳爣鐨勬嫋鍔�
+        public void mouseDragged(MouseEvent me)//鼠标的拖动
         {
-            drawpad.setStratBar("榧犳爣鎷栧姩鍦細[" + me.getX() + " ," + me.getY() + "]");
-            if (chosenStatus == 3) {// 浠绘剰绾跨殑鐢绘硶
+            drawpad.setStratBar("鼠标拖动在：[" + me.getX() + " ," + me.getY() + "]");
+            if (chosenStatus == 3) {// 任意线的画法
                 itemList[index - 1].x1 = itemList[index].x2 = itemList[index].x1 = me.getX();
                 itemList[index - 1].y1 = itemList[index].y2 = itemList[index].y1 = me.getY();
                 index++;
-                createNewitem();//鍒涘缓鏂扮殑鍥惧舰鐨勫熀鏈崟鍏冨璞�
+                createNewitem();//创建新的图形的基本单元对象
                 repaint();
-            } else if (chosenStatus == 16) {
-                if (chooseni >= 0) {// 绉诲姩鐨勮繃绋�
+            }
+            else if (chosenStatus == 2) {// 任意线的画法
+                itemList[index - 1].x1 = itemList[index].x2 = itemList[index].x1 = me.getX();
+                itemList[index - 1].y1 = itemList[index].y2 = itemList[index].y1 = me.getY();
+                index++;
+                createNewitem();//创建新的图形的基本单元对象
+                repaint();
+            }
+            else if (chosenStatus == 16) {
+                if (chooseni >= 0) {// 移动的过程
                     itemList[chooseni].x1 = itemList[chooseni].x1 + me.getX() - x0;
                     itemList[chooseni].y1 = itemList[chooseni].y1 + me.getY() - y0;
                     itemList[chooseni].x2 = itemList[chooseni].x2 + me.getX() - x0;
@@ -395,13 +418,13 @@ public class DrawArea extends JPanel {
                     y0 = me.getY();
                     repaint();
                 }
-            } else if (chosenStatus == 17) {// 鏀惧ぇ缂╁皬鐨勮繃绋�
+            } else if (chosenStatus == 17) {// 放大缩小的过程
                 if (chooseni >= 0) {
                     itemList[chooseni].x2 = me.getX();
                     itemList[chooseni].y2 = me.getY();
                     repaint();
                 }
-            } else if (chosenStatus >= 3 && chosenStatus <= 12) {// 缁樺埗鍥惧舰鐨勮繃绋�
+            } else if (chosenStatus >= 2 && chosenStatus <= 12) {// 绘制图形的过程
                 itemList[index].x2 = me.getX();
                 itemList[index].y2 = me.getY();
                 repaint();
@@ -409,17 +432,17 @@ public class DrawArea extends JPanel {
             //repaint();
         }
 
-        public void mouseMoved(MouseEvent me)//榧犳爣鐨勭Щ鍔�
+        public void mouseMoved(MouseEvent me)//鼠标的移动
         {
-            drawpad.setStratBar("榧犳爣绉诲姩鍦細[" + me.getX() + " ," + me.getY() + "]");
+            drawpad.setStratBar("鼠标移动在：[" + me.getX() + " ," + me.getY() + "]");
             for (chooseni = index - 1; chooseni >= 0; chooseni--) {
-                // 浠庡悗鍒板墠瀵绘壘褰撳墠榧犳爣鏄惁鍦ㄦ煇涓浘褰㈠唴閮�
+                // 从后到前寻找当前鼠标是否在某个图形内部
                 if (itemList[chooseni].in(me.getX(), me.getY())) {
-                    break;// 鍏跺畠鎿嶄綔鍙渶鎵惧埌currenti鍗冲彲
+                    break;// 其它操作只需找到currenti即可
                 }
             }
-            if (chooseni >= 0) {// 鏈夊浘褰㈣閫変腑
-                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));// 鏇存敼榧犳爣鏍峰紡涓虹澶�
+            if (chooseni >= 0) {// 有图形被选中
+                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));// 更改鼠标样式为箭头
             } else {
                 setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
             }

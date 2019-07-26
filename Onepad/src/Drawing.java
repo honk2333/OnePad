@@ -8,32 +8,30 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-//å›¾å½¢ç»˜åˆ¶ç±» ç”¨äºç»˜åˆ¶å„ç§å›¾å½¢
-//çˆ¶ç±»ï¼ŒåŸºæœ¬å›¾å½¢å•å…ƒï¼Œç”¨åˆ°ä¸²è¡Œçš„æ¥å£ï¼Œä¿å­˜ä½¿ç”¨åˆ°
-//å…¬å…±çš„å±æ€§æ”¾åˆ°è¶…ç±»ä¸­ï¼Œå­ç±»å¯ä»¥é¿å…é‡å¤å®šä¹‰
+//Í¼ĞÎ»æÖÆÀà£¬¸¸ÀàÎª»ù±¾Í¼ĞÎµ¥Ôª£¬¹«¹²ÊôĞÔ·Åµ½³¬ÀàÖĞ£¬¿ÉÒÔ±ÜÃâ×ÓÀàµÄÖØ¸´¶¨Òå
 public class Drawing implements Serializable {
 
-    int x1, x2, y1, y2;        //å®šä¹‰åæ ‡å±æ€§
-    int R, G, B;                //å®šä¹‰è‰²å½©å±æ€§
-    float stroke;            //å®šä¹‰çº¿æ¡ç²—ç»†çš„å±æ€§
-    int type;                //å®šä¹‰å­—ä½“å±æ€§
-    String s1;                //å®šä¹‰å­—ä½“çš„é£æ ¼
-    String s2;                //å®šä¹‰å­—ä½“çš„é£æ ¼
-    int typechoice;// è®°å½•å›¾å½¢å±æ€§ï¼Œä¸currentchoiceç›¸åŒ¹é…
+    int x1, x2, y1, y2;        //¶¨Òå×ø±êÊôĞÔ
+    int R, G, B;               //¶¨ÒåÉ«²ÊRGBÊôĞÔ
+    float stroke;              //¶¨ÒåÏßÌõ´ÖÏ¸ÊôĞÔ
+    int type;                  //¶¨Òå×ÖÌåÊôĞÔ
+    String s1;                 //¶¨Òå×ÖÌå·ç¸ñ£º´ÖÌå
+    String s2;                 //¶¨Òå×ÖÌå·ç¸ñ£ºĞ±Ìå
+    int typechoice;// ¼ÇÂ¼Í¼ĞÎµÄÊôĞÔ£¬²¢Óëµ±Ç°ÊôĞÔÏàÆ¥Åä
 
     int gettypechoice() {
         return typechoice;
-    }// è·å–typechoiceï¼Œå¡«å……ç”¨
+    }// »ñÈ¡Ìî³äÓÃµÄtypechoice
 
     void draw(Graphics2D g2d) {
-    }//å®šä¹‰ç»˜å›¾å‡½æ•°
+    }//¶¨Òå»æÍ¼º¯Êı
 
     boolean in(int x, int y) {
         return false;
-    }// åˆ¤æ–­å½“å‰ç‚¹æ˜¯å¦åœ¨æ­¤å›¾å½¢å†…ï¼ˆæˆ–é™„è¿‘ï¼‰ï¼Œé€‰æ‹©å›¾å½¢æ—¶ä½¿ç”¨
+    }// ÅĞ¶Ïµ±Ç°µÄµãÊÇ·ñÔÚÍ¼ĞÎÄÚ²¿»î¸½½ü£¬ÓÃÓÚÑ¡ÔñÍ¼ĞÎ
 }
 
-class Line extends Drawing//ç›´çº¿ç±»
+class Line extends Drawing//Ö±ÏßÀà
 {
     int gettypechoice() {
         typechoice = 4;
@@ -41,14 +39,14 @@ class Line extends Drawing//ç›´çº¿ç±»
     }
 
     void draw(Graphics2D g2d) {
-        g2d.setPaint(new Color(R, G, B));// ä¸º Graphics2D ä¸Šä¸‹æ–‡è®¾ç½® Paint å±æ€§ã€‚
+        g2d.setPaint(new Color(R, G, B));// Îª Graphics2DÉÏÏÂÎÄÉèÖÃÉ«²ÊPaintÊôĞÔ
         g2d.setStroke(new BasicStroke(stroke, BasicStroke.CAP_ROUND,
                 BasicStroke.JOIN_BEVEL));
-        // setStroke(Stroke s)ä¸º Graphics2D ä¸Šä¸‹æ–‡è®¾ç½® Stroke
-        g2d.drawLine(x1, y1, x2, y2);// ç”»ç›´çº¿
+        // setStroke(Stroke s)Îª Graphics2DÉÏÏÂÎÄÉèÖÃ ×ÖÌå´ÖÏ¸ÊôĞÔ
+        g2d.drawLine(x1, y1, x2, y2);//»­Ö±Ïß
     }
 
-    boolean in(int x, int y) {// é€‰ä¸­ç›´çº¿çš„æ¡ä»¶ï¼Œåˆ¤æ–­å½“å‰ç‚¹æ˜¯å¦é è¿‘ç›´çº¿ï¼Œå³è¡¡é‡â€œé è¿‘ç›´çº¿â€çš„æ–¹æ³•
+    boolean in(int x, int y) {//Ñ¡ÖĞÖ±ÏßµÄÌõ¼ş£ºÅĞ¶Ïµ±Ç°µãÊÇ·ñ¿¿½üÖ±Ïß
         if (Math.abs(x2 - x1) <= 5) {
             if (((x >= (x1 - 5)) && (x <= (x1 + 5))) && (y >= Math.min(y1, y2) && y <= Math.max(y1, y2))) {
                 return true;
@@ -59,7 +57,7 @@ class Line extends Drawing//ç›´çº¿ç±»
                 return true;
             }
         }
-        if (Math.abs((x2 - x1) * (y - y1) - (y2 - y1) * (x - x1)) < Math.abs(5 * (x2 - x1))// ç›´çº¿æ–¹ç¨‹å˜å½¢
+        if (Math.abs((x2 - x1) * (y - y1) - (y2 - y1) * (x - x1)) < Math.abs(5 * (x2 - x1))// Ö±Ïß·½³Ì±äĞÎ
                 && ((x >= Math.min(x1, x2)) && (x <= Math.max(x1, x2))
                 && ((y >= Math.min(y1, y2)) && (y <= Math.max(y1, y2))))) {
             return true;
@@ -68,7 +66,7 @@ class Line extends Drawing//ç›´çº¿ç±»
     }
 }
 
-class Rect extends Drawing {//çŸ©å½¢ç±»
+class Rect extends Drawing {//¾ØĞÎÀà
 
     int gettypechoice() {
         typechoice = 5;
@@ -81,7 +79,7 @@ class Rect extends Drawing {//çŸ©å½¢ç±»
         g2d.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
 
-    boolean in(int x, int y) {// åˆ¤æ–­å½“å‰ç‚¹æ˜¯å¦åœ¨çŸ©å½¢å†…
+    boolean in(int x, int y) {//ÅĞ¶Ïµ±Ç°µãÊÇ·ñÔÚ¾ØĞÎÄÚ
         if (x >= Math.min(x1, x2) && x <= Math.max(x1, x2) && y >= Math.min(y1, y2) && y <= Math.max(y1, y2)) {
             return true;
         } else {
@@ -90,7 +88,7 @@ class Rect extends Drawing {//çŸ©å½¢ç±»
     }
 }
 
-class fillRect extends Drawing {//å®å¿ƒçŸ©å½¢ç±»
+class fillRect extends Drawing {//ÊµĞÄ¾ØĞÎÀà
 
     int gettypechoice() {
         typechoice = 6;
@@ -103,7 +101,7 @@ class fillRect extends Drawing {//å®å¿ƒçŸ©å½¢ç±»
         g2d.fillRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
 
-    boolean in(int x, int y) {// åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨å®å¿ƒçŸ©å½¢å†…
+    boolean in(int x, int y) {// ÅĞ¶ÏµãÊÇ·ñÔÚÊµĞÄ¾ØĞÎÄÚ
         if (x >= Math.min(x1, x2) && x <= Math.max(x1, x2) && y >= Math.min(y1, y2) && y <= Math.max(y1, y2)) {
             return true;
         } else {
@@ -112,7 +110,7 @@ class fillRect extends Drawing {//å®å¿ƒçŸ©å½¢ç±»
     }
 }
 
-class Oval extends Drawing {//æ¤­åœ†ç±»
+class Oval extends Drawing {//ÍÖÔ²Àà
 
     int gettypechoice() {
         typechoice = 7;
@@ -125,7 +123,7 @@ class Oval extends Drawing {//æ¤­åœ†ç±»
         g2d.drawOval(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
 
-    boolean in(int x, int y) {// åˆ¤æ–­ç‚¹æ˜¯å¦å†æ¤­åœ†å†…ï¼ˆåŸºäºdrawOvalå‡½æ•°å‚æ•°å«ä¹‰åŠæ¤­åœ†æ•°å­¦æ–¹ç¨‹æ¨å¯¼ï¼‰
+    boolean in(int x, int y) {//ÅĞ¶ÏµãÊÇ·ñÔÚÔÙÍÖÔ²ÄÚ
         double x0 = ((double) (x2 + x1) / 2);
         double y0 = ((double) (y2 + y1) / 2);
         double xi = Math.pow((x2 - x1), 2);
@@ -137,7 +135,7 @@ class Oval extends Drawing {//æ¤­åœ†ç±»
     }
 }
 
-class fillOval extends Drawing {//å®å¿ƒæ¤­åœ†ç±»
+class fillOval extends Drawing {//ÊµĞÄÍÖÔ²Àà
 
     int gettypechoice() {
         typechoice = 8;
@@ -162,7 +160,7 @@ class fillOval extends Drawing {//å®å¿ƒæ¤­åœ†ç±»
     }
 }
 
-class Circle extends Drawing {// åœ†å½¢ç±»
+class Circle extends Drawing {//Ô²ĞÎÀà
 
     int gettypechoice() {
         typechoice = 9;
@@ -176,7 +174,7 @@ class Circle extends Drawing {// åœ†å½¢ç±»
                 Math.abs(y1 - y2)), Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2)));
     }
 
-    boolean in(int x, int y) {// åˆ¤æ–­ç‚¹æ˜¯å¦å†åœ†å†…ï¼ˆåŸºäºdrawOvalå‡½æ•°å‚æ•°å«ä¹‰åŠæ¤­åœ†æ•°å­¦æ–¹ç¨‹æ¨å¯¼ï¼‰
+    boolean in(int x, int y) {// ÅĞ¶ÏµãÊÇ·ñÔÚÔ²ÄÚ
         double a = Math.min(x1, x2);
         double b = Math.min(y1, y2);
         double d = Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2));
@@ -190,7 +188,7 @@ class Circle extends Drawing {// åœ†å½¢ç±»
     }
 }
 
-class fillCircle extends Drawing {//å®å¿ƒåœ†ç±»
+class fillCircle extends Drawing {//ÊµĞÄÔ²Àà
 
     int gettypechoice() {
         typechoice = 10;
@@ -204,7 +202,7 @@ class fillCircle extends Drawing {//å®å¿ƒåœ†ç±»
                 Math.abs(y1 - y2)), Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2)));
     }
 
-    boolean in(int x, int y) {// åˆ¤æ–­ç‚¹æ˜¯å¦å†åœ†å†…ï¼ˆåŸºäºdrawOvalå‡½æ•°å‚æ•°å«ä¹‰åŠæ¤­åœ†æ•°å­¦æ–¹ç¨‹æ¨å¯¼ï¼‰
+    boolean in(int x, int y) {// ÅĞ¶ÏµãÊÇ·ñÔÚÔ²ÄÚ
         double a = Math.min(x1, x2);
         double b = Math.min(y1, y2);
         double d = Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2));
@@ -217,7 +215,7 @@ class fillCircle extends Drawing {//å®å¿ƒåœ†ç±»
     }
 }
 
-class RoundRect extends Drawing {//åœ†è§’çŸ©å½¢ç±»
+class RoundRect extends Drawing {//Ô²½Ç¾ØĞÎÀà
 
     int gettypechoice() {
         typechoice = 11;
@@ -230,7 +228,7 @@ class RoundRect extends Drawing {//åœ†è§’çŸ©å½¢ç±»
         g2d.drawRoundRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2), 50, 35);
     }
 
-    boolean in(int x, int y) {// åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨åœ†è§’çŸ©å½¢å†…ï¼ˆè¿‘ä¼¼çŸ©å½¢å¤„ç†ï¼‰
+    boolean in(int x, int y) {//  ÅĞ¶ÏµãÊÇ·ñÔÚÔ²½Ç¾ØĞÎÄÚ£¨½üËÆ¾ØĞÎ´¦Àí£©
         if (x >= Math.min(x1, x2) && x <= Math.max(x1, x2) && y >= Math.min(y1, y2) && y <= Math.max(y1, y2)) {
             return true;
         } else {
@@ -240,14 +238,14 @@ class RoundRect extends Drawing {//åœ†è§’çŸ©å½¢ç±»
 
 }
 
-class fillRoundRect extends Drawing {//å®å¿ƒåœ†è§’çŸ©å½¢ç±»
+class fillRoundRect extends Drawing {//ÊµĞÄÔ²½Ç¾ØĞÎÀà
 
     int gettypechoice() {
         typechoice = 12;
         return typechoice;
     }
 
-    void draw(Graphics2D g2d) {
+    void draw(Graphics2D g2d) {  //ÅĞ¶ÏµãÊÇ·ñÔÚÔ²½Ç¾ØĞÎÄÚ£¨½üËÆ¾ØĞÎ´¦Àí£©
         g2d.setPaint(new Color(R, G, B));
         g2d.setStroke(new BasicStroke(stroke));
         g2d.fillRoundRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2), 50, 35);
@@ -263,7 +261,7 @@ class fillRoundRect extends Drawing {//å®å¿ƒåœ†è§’çŸ©å½¢ç±»
 
 }
 
-class Pencil extends Drawing {//éšç¬”ç”»ç±»
+class Pencil extends Drawing {////Ëæ±Ê»­Àà
 
     int gettypechoice() {
         typechoice = 3;
@@ -275,13 +273,28 @@ class Pencil extends Drawing {//éšç¬”ç”»ç±»
         g2d.setStroke(new BasicStroke(stroke, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
         g2d.drawLine(x1, y1, x2, y2);
     }
-    // inå‡½æ•°ç»§æ‰¿è¿”å›falseï¼Œå³éšç¬”ç”»ä¸èƒ½è¢«é€‰ä¸­
+    // inº¯Êı¼Ì³Ğ·µ»Øfalse£¬¼´Ëæ±Ê»­²»ÄÜ±»Ñ¡ÖĞ
+}
+class Eraser extends Drawing {////Ëæ±Ê»­Àà
+
+    int gettypechoice() {
+        typechoice = 2;
+        return typechoice;
+    }
+
+    void draw(Graphics2D g2d) {
+        g2d.setPaint(new Color(255, 255, 255));
+        g2d.setStroke(new BasicStroke(stroke, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
+        g2d.drawLine(x1, y1, x2, y2);
+    }
+    // inº¯Êı¼Ì³Ğ·µ»Øfalse£¬¼´Ëæ±Ê»­²»ÄÜ±»Ñ¡ÖĞ
 }
 
 
 
 
-class Word extends Drawing {// è¾“å…¥æ–‡å­—ç±»
+
+class Word extends Drawing {//ÊäÈëÎÄ×ÖÀà
 
     int gettypechoice() {
         typechoice = 13;
@@ -290,7 +303,7 @@ class Word extends Drawing {// è¾“å…¥æ–‡å­—ç±»
 
     void draw(Graphics2D g2d) {
         g2d.setPaint(new Color(R, G, B));
-        g2d.setFont(new Font(s2, type, ((int) stroke) * 18));//è®¾ç½®å­—ä½“
+        g2d.setFont(new Font(s2, type, ((int) stroke) * 18));//ÉèÖÃ×ÖÌå
         if (s1 != null) {
             g2d.drawString(s1, x1, y1 + (int) stroke * 18);
         }
