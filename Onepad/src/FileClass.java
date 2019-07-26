@@ -4,7 +4,7 @@ import java.io.*;
 
 import javax.swing.*;
 
-//æ–‡ä»¶ç±» ï¼ˆæ–‡ä»¶çš„æ‰“å¼€ã€æ–°å»ºã€ä¿å­˜ï¼‰
+//ÎÄ¼şÀà £¨ÎÄ¼şµÄ´ò¿ª¡¢ĞÂ½¨¡¢±£´æ£©
 public class FileClass {
     private DrawPad drawpad;
     DrawArea drawarea = null;
@@ -15,34 +15,34 @@ public class FileClass {
     }
 
     public void newFile() {
-        // TODO æ–°å»ºå›¾åƒ
+        // TODO ĞÂ½¨Í¼Ïñ
         drawarea.setIndex(0);
-        drawarea.setChosenStatus(3);//è®¾ç½®é»˜è®¤ä¸ºéšç¬”ç”»
-        drawarea.setColor(Color.black);//è®¾ç½®é¢œè‰²
-        drawarea.setStroke(1.0f);//è®¾ç½®ç”»ç¬”çš„ç²—ç»†
+        drawarea.setChosenStatus(3);//ÉèÖÃÄ¬ÈÏÎªËæ±Ê»­
+        drawarea.setColor(Color.black);//ÉèÖÃÑÕÉ«
+        drawarea.setStroke(1.0f);//ÉèÖÃ»­±ÊµÄ´ÖÏ¸
         drawarea.createNewitem();
         drawarea.repaint();
     }
 
     public void openFile() {
-        // TODO æ‰“å¼€å›¾åƒ
+        // TODO ´ò¿ªÍ¼Ïñ
 
-        //JFileChooser ä¸ºç”¨æˆ·é€‰æ‹©æ–‡ä»¶æä¾›äº†ä¸€ç§ç®€å•çš„æœºåˆ¶
+        //JFileChooser ÎªÓÃ»§Ñ¡ÔñÎÄ¼şÌá¹©ÁËÒ»ÖÖ¼òµ¥µÄ»úÖÆ
         JFileChooser filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
           /* FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                    "JPG & GIF Images", "jpg", "gif");//å…¶ä¸­åªæ˜¾ç¤º .jpg å’Œ .gif å›¾åƒ
+                    "JPG & GIF Images", "jpg", "gif");//ÆäÖĞÖ»ÏÔÊ¾ .jpg ºÍ .gif Í¼Ïñ
 		   filechooser.setFileFilter(filter);*/
         int returnVal = filechooser.showOpenDialog(drawpad);
 
-        if (returnVal == JFileChooser.CANCEL_OPTION) {//å¦‚æœå•å‡»ç¡®å®šæŒ‰é’®å°±æ‰§è¡Œä¸‹é¢å¾—ç¨‹åº
+        if (returnVal == JFileChooser.CANCEL_OPTION) {//Èç¹ûµ¥»÷È·¶¨°´Å¥¾ÍÖ´ĞĞÏÂÃæµÃ³ÌĞò
             return;
         }
-        File fileName = filechooser.getSelectedFile();//getSelectedFile()è¿”å›é€‰ä¸­çš„æ–‡ä»¶
+        File fileName = filechooser.getSelectedFile();//getSelectedFile()·µ»ØÑ¡ÖĞµÄÎÄ¼ş
         fileName.canRead();
-        if (fileName == null || fileName.getName().equals(""))//æ–‡ä»¶åä¸å­˜åœ¨æ—¶
+        if (fileName == null || fileName.getName().equals(""))//ÎÄ¼şÃû²»´æÔÚÊ±
         {
-            JOptionPane.showMessageDialog(filechooser, "æ–‡ä»¶å", "è¯·è¾“å…¥æ–‡ä»¶åï¼", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(filechooser, "ÎÄ¼şÃû", "ÇëÊäÈëÎÄ¼şÃû£¡", JOptionPane.ERROR_MESSAGE);
         } else {
 
             try {
@@ -61,39 +61,39 @@ public class FileClass {
                 input.close();
                 drawarea.repaint();
             } catch (FileNotFoundException e) {
-                JOptionPane.showMessageDialog(drawpad, "æ²¡æœ‰æ‰¾åˆ°æºæ–‡ä»¶ï¼", "æ²¡æœ‰æ‰¾åˆ°æºæ–‡ä»¶", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(drawpad, "Ã»ÓĞÕÒµ½Ô´ÎÄ¼ş£¡", "Ã»ÓĞÕÒµ½Ô´ÎÄ¼ş", JOptionPane.ERROR_MESSAGE);
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(drawpad, "è¯»æ–‡ä»¶æ˜¯å‘ç”Ÿé”™è¯¯ï¼", "è¯»å–é”™è¯¯", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(drawpad, "¶ÁÎÄ¼şÊÇ·¢Éú´íÎó£¡", "¶ÁÈ¡´íÎó", JOptionPane.ERROR_MESSAGE);
             } catch (ClassNotFoundException e) {
-                JOptionPane.showMessageDialog(drawpad, "ä¸èƒ½åˆ›å»ºå¯¹è±¡ï¼", "å·²åˆ°æ–‡ä»¶æœ«å°¾", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(drawpad, "²»ÄÜ´´½¨¶ÔÏó£¡", "ÒÑµ½ÎÄ¼şÄ©Î²", JOptionPane.ERROR_MESSAGE);
             }
 
         }
     }
 
-    //ä¿å­˜å›¾åƒæ–‡ä»¶ç¨‹åºæ®µï¼Œç”¨åˆ°æ–‡ä»¶å¯¹ï¼ˆFileOupputSreamï¼‰è±¡æµ
+    //±£´æÍ¼ÏñÎÄ¼ş³ÌĞò¶Î£¬ÓÃµ½ÎÄ¼ş¶Ô£¨FileOupputSream£©ÏóÁ÷
     public void saveFile() {
-        // TODO ä¿å­˜å›¾åƒ
+        // TODO ±£´æÍ¼Ïñ
 
-        //JFileChooser ä¸ºç”¨æˆ·é€‰æ‹©æ–‡ä»¶æä¾›äº†ä¸€ç§ç®€å•çš„æœºåˆ¶
+        //JFileChooser ÎªÓÃ»§Ñ¡ÔñÎÄ¼şÌá¹©ÁËÒ»ÖÖ¼òµ¥µÄ»úÖÆ
         JFileChooser filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        //setFileSelectionMode()è®¾ç½® JFileChooserï¼Œä»¥å…è®¸ç”¨æˆ·åªé€‰æ‹©æ–‡ä»¶ã€åªé€‰æ‹©ç›®å½•ï¼Œæˆ–è€…å¯é€‰æ‹©æ–‡ä»¶å’Œç›®å½•ã€‚
+        //setFileSelectionMode()ÉèÖÃ JFileChooser£¬ÒÔÔÊĞíÓÃ»§Ö»Ñ¡ÔñÎÄ¼ş¡¢Ö»Ñ¡ÔñÄ¿Â¼£¬»òÕß¿ÉÑ¡ÔñÎÄ¼şºÍÄ¿Â¼¡£
         int result = filechooser.showSaveDialog(drawpad);
         if (result == JFileChooser.CANCEL_OPTION) {
             return;
         }
 
-        File fileName = filechooser.getSelectedFile();//getSelectedFile()è¿”å›é€‰ä¸­çš„æ–‡ä»¶
-        fileName.canWrite();//æµ‹è¯•åº”ç”¨ç¨‹åºæ˜¯å¦å¯ä»¥ä¿®æ”¹æ­¤æŠ½è±¡è·¯å¾„åè¡¨ç¤ºçš„æ–‡ä»¶
-        if (fileName == null || fileName.getName().equals(""))//æ–‡ä»¶åä¸å­˜åœ¨æ—¶
+        File fileName = filechooser.getSelectedFile();//getSelectedFile()·µ»ØÑ¡ÖĞµÄÎÄ¼ş
+        fileName.canWrite();//²âÊÔÓ¦ÓÃ³ÌĞòÊÇ·ñ¿ÉÒÔĞŞ¸Ä´Ë³éÏóÂ·¾¶Ãû±íÊ¾µÄÎÄ¼ş
+        if (fileName == null || fileName.getName().equals(""))//ÎÄ¼şÃû²»´æÔÚÊ±
         {
-            JOptionPane.showMessageDialog(filechooser, "æ–‡ä»¶å", "è¯·è¾“å…¥æ–‡ä»¶åï¼", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(filechooser, "ÎÄ¼şÃû", "ÇëÊäÈëÎÄ¼şÃû£¡", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                fileName.delete();//åˆ é™¤æ­¤æŠ½è±¡è·¯å¾„åè¡¨ç¤ºçš„æ–‡ä»¶æˆ–ç›®å½•
-                FileOutputStream fos = new FileOutputStream(fileName + ".xxh");//æ–‡ä»¶è¾“å‡ºæµä»¥å­—èŠ‚çš„æ–¹å¼è¾“å‡º
-                //å¯¹è±¡è¾“å‡ºæµ
+                fileName.delete();//É¾³ı´Ë³éÏóÂ·¾¶Ãû±íÊ¾µÄÎÄ¼ş»òÄ¿Â¼
+                FileOutputStream fos = new FileOutputStream(fileName + ".xxh");//ÎÄ¼şÊä³öÁ÷ÒÔ×Ö½ÚµÄ·½Ê½Êä³ö
+                //¶ÔÏóÊä³öÁ÷
                 ObjectOutputStream output = new ObjectOutputStream(fos);
                 //Drawing record;
 
@@ -102,8 +102,8 @@ public class FileClass {
                 for (int i = 0; i < drawarea.getIndex(); i++) {
                     Drawing p = drawarea.itemList[i];
                     output.writeObject(p);
-                    output.flush();//åˆ·æ–°è¯¥æµçš„ç¼“å†²ã€‚æ­¤æ“ä½œå°†å†™å…¥æ‰€æœ‰å·²ç¼“å†²çš„è¾“å‡ºå­—èŠ‚ï¼Œå¹¶å°†å®ƒä»¬åˆ·æ–°åˆ°åº•å±‚æµä¸­ã€‚
-                    //å°†æ‰€æœ‰çš„å›¾å½¢ä¿¡æ¯å¼ºåˆ¶çš„è½¬æ¢æˆçˆ¶ç±»çº¿æ€§åŒ–å­˜å‚¨åˆ°æ–‡ä»¶ä¸­
+                    output.flush();//Ë¢ĞÂ¸ÃÁ÷µÄ»º³å¡£´Ë²Ù×÷½«Ğ´ÈëËùÓĞÒÑ»º³åµÄÊä³ö×Ö½Ú£¬²¢½«ËüÃÇË¢ĞÂµ½µ×²ãÁ÷ÖĞ¡£
+                    //½«ËùÓĞµÄÍ¼ĞÎĞÅÏ¢Ç¿ÖÆµÄ×ª»»³É¸¸ÀàÏßĞÔ»¯´æ´¢µ½ÎÄ¼şÖĞ
                 }
                 output.close();
                 fos.close();

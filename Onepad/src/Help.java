@@ -2,7 +2,7 @@
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-//å¸®åŠ©èœå•åŠŸèƒ½çš„äº‹é¡¹ç±»
+//°ïÖú²Ëµ¥¹¦ÄÜµÄÊÂÏîÀà
 public class Help extends JFrame {
     private DrawPad drawpad = null;
 
@@ -11,15 +11,14 @@ public class Help extends JFrame {
     }
 
     public void MainHelp() {
-        JOptionPane.showMessageDialog(this, "Tuhuabanå¸®åŠ©æ–‡æ¡£", "Tuhuaban", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Draw_pad°ïÖúÎÄµµ", "Draw_pad", JOptionPane.WARNING_MESSAGE);
     }
 
     public void AboutBook() {
-        JOptionPane.showMessageDialog(drawpad, "Tuhuaban" + "\n"
-                + "ä½œè€…:    " + "\n"
-                + "     ç‹æ´ªç§‘ " + "\n"
-        		+ "   åˆ˜ç‚¯é©¿" + "\n"
-
-                + "å®Œæˆæ—¶é—´:  2019/7/28", "Tuhuaban", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(drawpad, "Draw_pad" + "\n" + "°æ±¾: 1.0" + "\n"
+                + "×÷Õß:    " + "\n"
+                + "      Íõºé¿Æ " + "\n"
+        		+ "      Áõ¾¼æä" + "\n"
+                + "Íê³ÉÊ±¼ä:  2019/7ÔÂ", "Draw_pad", JOptionPane.WARNING_MESSAGE);
     }
 }
