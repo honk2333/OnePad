@@ -14,95 +14,110 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-//ä¸»ç•Œé¢ç±»
+//Ö÷½çÃæÀà
 public class DrawPad extends JFrame implements ActionListener {
 
 	// private static final long serialVersionUID = -2551980583852173918L;
 
-	// å·¥å…·æŒ‰é’®éƒ¨åˆ†------------------------------------------------------------------------------------------------------------------------------------------
-	JToolBar buttonpanel;// å®šä¹‰æŒ‰é’®é¢æ¿
-	String names[] = { "newfile", "openfile", "savefile", "pen", "line", "word", "stroke", "delete", "fill" ,"eraser"};// å®šä¹‰å·¥å…·æ å›¾æ ‡çš„åç§°
-	Icon icons[];// å®šä¹‰æŒ‰é’®å›¾æ ‡æ•°ç»„
-	String tiptext[] = { // è¿™é‡Œæ˜¯é¼ æ ‡ç§»åˆ°ç›¸åº”çš„æŒ‰é’®ä¸Šç»™å‡ºç›¸åº”çš„æç¤º
-			"æ–°å»ºä¸€ä¸ªå›¾ç‰‡", "æ‰“å¼€å›¾ç‰‡", "ä¿å­˜å›¾ç‰‡", "éšç¬”ç”»", "ç”»ç›´çº¿", "æ–‡å­—çš„è¾“å…¥", "é€‰æ‹©çº¿æ¡çš„ç²—ç»†", "åˆ é™¤ä¸€ä¸ªå›¾å½¢", "å¡«å……å›¾å½¢" ,"æ©¡çš®æ“¦"};
-	JButton button[];// å®šä¹‰å·¥å…·æ¡ä¸­çš„æŒ‰é’®ç»„
+	//±êÇ©Ò³²¿·Ö-------------------------------------------------------------------------------------------------------------------------------------------
+	JToolBar Labelpanel;
+	String Labelfilename[];
+	Icon LabelIcons[];
+	String Labeltiptext[];
+	JButton Labelbutton[];
+	
+	// ¹¤¾ß°´Å¥²¿·Ö------------------------------------------------------------------------------------------------------------------------------------------
+	JToolBar buttonpanel;// ¶¨Òå°´Å¥Ãæ°å
+	String names[] = { "newfile", "openfile", "savefile", "pen", "line", "word", "stroke", "delete", "fill" ,"eraser"};// ¶¨Òå¹¤¾ßÀ¸Í¼±êµÄÃû³Æ
+	Icon icons[];// ¶¨Òå°´Å¥Í¼±êÊı×é
+	String tiptext[] = { // ÕâÀïÊÇÊó±êÒÆµ½ÏàÓ¦µÄ°´Å¥ÉÏ¸ø³öÏàÓ¦µÄÌáÊ¾
+			"ĞÂ½¨Ò»¸öÍ¼Æ¬", "´ò¿ªÍ¼Æ¬", "±£´æÍ¼Æ¬", "Ëæ±Ê»­", "»­Ö±Ïß", "ÎÄ×ÖµÄÊäÈë", "Ñ¡ÔñÏßÌõµÄ´ÖÏ¸", "É¾³ıÒ»¸öÍ¼ĞÎ", "Ìî³äÍ¼ĞÎ" ,"ÏğÆ¤²Á"};
+	JButton button[];// ¶¨Òå¹¤¾ßÌõÖĞµÄ°´Å¥×é
 
-	// å›¾å½¢éƒ¨åˆ†------------------------------------------------------------------------------------------------------------------------------------------
+	// Í¼ĞÎ²¿·Ö------------------------------------------------------------------------------------------------------------------------------------------
 	JToolBar graphpanel;
 	Icon graphIcons[];
-	String graphtext[] = { "ç”»ç©ºå¿ƒçš„çŸ©å½¢", "å¡«å……çŸ©å½¢", "ç”»ç©ºå¿ƒçš„æ¤­åœ†", "å¡«å……æ¤­åœ†", "ç”»ç©ºå¿ƒçš„åœ†", "å¡«å……åœ†", "ç”»åœ†è§’çŸ©å½¢", "å¡«å……åœ†è§’çŸ©å½¢", "ç§»åŠ¨å›¾å½¢" };
+	String graphtext[] = { "»­¿ÕĞÄµÄ¾ØĞÎ", "Ìî³ä¾ØĞÎ", "»­¿ÕĞÄµÄÍÖÔ²", "Ìî³äÍÖÔ²", "»­¿ÕĞÄµÄÔ²", "Ìî³äÔ²", "»­Ô²½Ç¾ØĞÎ", "Ìî³äÔ²½Ç¾ØĞÎ", "ÒÆ¶¯Í¼ĞÎ" };
 	String graphnames[] = { "rect", "frect", "oval", "foval", "circle", "fcircle", "roundrect", "froundrect", "move" };
 	JButton graphbutton[];
 
-	// å­—ä½“éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
-	String[] fontName;// å­—ä½“åç§°
-	JCheckBox bold, italic, plain;// å·¥å…·æ¡å­—ä½“çš„é£æ ¼ï¼ˆå¤é€‰æ¡†ï¼‰
-	JComboBox styles;// å·¥å…·æ¡ä¸­çš„å­—ä½“çš„æ ·å¼ï¼ˆä¸‹æ‹‰åˆ—è¡¨ï¼‰
+	// ×ÖÌå²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
+	String[] fontName;// ×ÖÌåÃû³Æ
+	JCheckBox bold, italic, plain;// ¹¤¾ßÌõ×ÖÌåµÄ·ç¸ñ£¨¸´Ñ¡¿ò£©
+	JComboBox styles;// ¹¤¾ßÌõÖĞµÄ×ÖÌåµÄÑùÊ½£¨ÏÂÀ­ÁĞ±í£©
 
-	// è°ƒè‰²éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
+	// µ÷É«²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
 	JButton cbutton;
 	JButton colorButton[];
 
-	// ç”»æ¿éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
-	DrawArea drawarea;// ç”»å¸ƒç±»çš„å®šä¹‰
+	// »­°å²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
+	DrawArea drawarea;// »­²¼ÀàµÄ¶¨Òå
 
-	// èœå•éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
-	JMenuBar bar;// å®šä¹‰èœå•æ¡
-	FileClass fileclass;// æ–‡ä»¶å¯¹è±¡
-	JMenu file, color, stroke, help, edit, background;// å®šä¹‰èœå•
-	JMenuItem newfile, openfile, savefile, exit;// file èœå•ä¸­çš„èœå•é¡¹
-	JMenuItem helpin, helpmain, colorchoice, strokeitem;// help èœå•ä¸­çš„èœå•é¡¹
-	JMenuItem editgraph, editcolor, editstroke, edittext;// ç¼–è¾‘èœå•ä¸­çš„é€‰é¡¹
-	Icon nf, sf, of;// æ–‡ä»¶èœå•é¡¹çš„å›¾æ ‡å¯¹è±¡
-	Help helpobject; // å®šä¹‰ä¸€ä¸ªå¸®åŠ©ç±»å¯¹è±¡
+	// ²Ëµ¥²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
+	JMenuBar bar;// ¶¨Òå²Ëµ¥Ìõ
+	FileClass fileclass;// ÎÄ¼ş¶ÔÏó
+	JMenu file, color, stroke, help, edit, background;// ¶¨Òå²Ëµ¥
+	JMenuItem newfile, openfile, savefile, exit;// file ²Ëµ¥ÖĞµÄ²Ëµ¥Ïî
+	JMenuItem helpin, helpmain, colorchoice, strokeitem;// help ²Ëµ¥ÖĞµÄ²Ëµ¥Ïî
+	JMenuItem editgraph, editcolor, editstroke, edittext;// ±à¼­²Ëµ¥ÖĞµÄÑ¡Ïî
+	Icon nf, sf, of;// ÎÄ¼ş²Ëµ¥ÏîµÄÍ¼±ê¶ÔÏó
+	Help helpobject; // ¶¨ÒåÒ»¸ö°ïÖúÀà¶ÔÏó
 
-	// çŠ¶æ€æ éƒ¨åˆ†--------------------------------------------------------------------------------------------------------------------------------------------
-	JLabel startbar;// çŠ¶æ€æ 
+	// ×´Ì¬À¸²¿·Ö--------------------------------------------------------------------------------------------------------------------------------------------
+	JLabel startbar;// ×´Ì¬À¸
 
 	DrawPad(String string) {
 		super(string);
+		
+		//±êÇ©Ò³²¿·Ö-------------------------------------------------------------------------------------------------------------------------------------------
+	    Labelpanel =new JToolBar(JToolBar.HORIZONTAL);
+	    Labelpanel.setLayout(new GridLayout(1,0,0,0));
+		Labelpanel.setFloatable(false);
+		
+		//button[0]=
+		
+		
+		// ¹¤¾ß°´Å¥²¿·Ö------------------------------------------------------------------------------------------------------------------------------------------
+		// ¹¤¾ßÀ¸µÄ³õÊ¼»¯
+		buttonpanel = new JToolBar(JToolBar.HORIZONTAL);// ÉèÖÃË®Æ½·½ÏòÅÅÁĞ
+		buttonpanel.setLayout(new GridLayout(0, 3, 0, 0));// ÉèÖÃ²¼¾Ö
+		buttonpanel.setFloatable(false);// ²»¿É¸¡¶¯
 
-		// å·¥å…·æŒ‰é’®éƒ¨åˆ†------------------------------------------------------------------------------------------------------------------------------------------
-		// å·¥å…·æ çš„åˆå§‹åŒ–
-		buttonpanel = new JToolBar(JToolBar.HORIZONTAL);// è®¾ç½®æ°´å¹³æ–¹å‘æ’åˆ—
-		buttonpanel.setLayout(new GridLayout(0, 3, 0, 0));// è®¾ç½®å¸ƒå±€
-		buttonpanel.setFloatable(false);// ä¸å¯æµ®åŠ¨
-
-		icons = new ImageIcon[names.length];// åˆå§‹åŒ–å·¥å…·æ ä¸­çš„å›¾æ ‡
-		button = new JButton[names.length]; // åˆ›å»ºå·¥å…·æ ä¸­çš„æŒ‰é’®
+		icons = new ImageIcon[names.length];// ³õÊ¼»¯¹¤¾ßÀ¸ÖĞµÄÍ¼±ê
+		button = new JButton[names.length]; // ´´½¨¹¤¾ßÀ¸ÖĞµÄ°´Å¥
 		for (int i = 0; i < names.length; i++) {
-			icons[i] = new ImageIcon("images/" + names[i] + ".png");// è·å¾—å›¾ç‰‡ï¼ˆä»¥ç±»è·¯å¾„ä¸ºåŸºå‡†ï¼‰
-			button[i] = new JButton(tiptext[i], icons[i]);// åˆ›å»ºå·¥å…·æ¡ä¸­çš„æŒ‰é’®
-			button[i].setToolTipText(tiptext[i]);// é¼ æ ‡ç§»åŠ¨åˆ°ç›¸åº”çš„æŒ‰é’®ä¸Šç»™å‡ºç›¸åº”çš„æç¤º
-			buttonpanel.add(button[i]);// æ·»åŠ æŒ‰é’®
+			icons[i] = new ImageIcon("images/" + names[i] + ".png");// »ñµÃÍ¼Æ¬£¨ÒÔÀàÂ·¾¶Îª»ù×¼£©
+			button[i] = new JButton(tiptext[i], icons[i]);// ´´½¨¹¤¾ßÌõÖĞµÄ°´Å¥
+			button[i].setToolTipText(tiptext[i]);// Êó±êÒÆ¶¯µ½ÏàÓ¦µÄ°´Å¥ÉÏ¸ø³öÏàÓ¦µÄÌáÊ¾
+			buttonpanel.add(button[i]);// Ìí¼Ó°´Å¥
 			button[i].setBackground(Color.white);
 			button[i].addActionListener(this);
 		}
 
-		// å›¾å½¢éƒ¨åˆ†------------------------------------------------------------------------------------------------------------------------------------------
+		// Í¼ĞÎ²¿·Ö------------------------------------------------------------------------------------------------------------------------------------------
 		graphpanel = new JToolBar(JToolBar.HORIZONTAL);
 		graphpanel.setLayout(new GridLayout(0, 3, 0, 0));
 		graphpanel.setFloatable(false);
-		graphIcons = new ImageIcon[graphnames.length];// åˆå§‹åŒ–å·¥å…·æ ä¸­çš„å›¾æ ‡
-		graphbutton = new JButton[graphnames.length]; // åˆ›å»ºå·¥å…·æ ä¸­çš„æŒ‰é’®
+		graphIcons = new ImageIcon[graphnames.length];// ³õÊ¼»¯¹¤¾ßÀ¸ÖĞµÄÍ¼±ê
+		graphbutton = new JButton[graphnames.length]; // ´´½¨¹¤¾ßÀ¸ÖĞµÄ°´Å¥
 		for (int i = 0; i < graphnames.length; i++) {
-			graphIcons[i] = new ImageIcon("images/" + graphnames[i] + ".png");// è·å¾—å›¾ç‰‡ï¼ˆä»¥ç±»è·¯å¾„ä¸ºåŸºå‡†ï¼‰
-			graphbutton[i] = new JButton(graphtext[i], graphIcons[i]);// åˆ›å»ºå·¥å…·æ¡ä¸­çš„æŒ‰é’®
-			graphbutton[i].setToolTipText(graphtext[i]);// é¼ æ ‡ç§»åŠ¨åˆ°ç›¸åº”çš„æŒ‰é’®ä¸Šç»™å‡ºç›¸åº”çš„æç¤º
-			graphpanel.add(graphbutton[i]);// æ·»åŠ æŒ‰é’®
+			graphIcons[i] = new ImageIcon("images/" + graphnames[i] + ".png");// »ñµÃÍ¼Æ¬£¨ÒÔÀàÂ·¾¶Îª»ù×¼£©
+			graphbutton[i] = new JButton(graphtext[i], graphIcons[i]);// ´´½¨¹¤¾ßÌõÖĞµÄ°´Å¥
+			graphbutton[i].setToolTipText(graphtext[i]);// Êó±êÒÆ¶¯µ½ÏàÓ¦µÄ°´Å¥ÉÏ¸ø³öÏàÓ¦µÄÌáÊ¾
+			graphpanel.add(graphbutton[i]);// Ìí¼Ó°´Å¥
 			graphbutton[i].setBackground(Color.white);
 			graphbutton[i].addActionListener(this);
 		}
 
-		// èœå•éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
-		file = new JMenu("æ–‡ä»¶");
-		edit = new JMenu("ç¼–è¾‘");
-		background = new JMenu("èƒŒæ™¯");
-		color = new JMenu("é¢œè‰²");
-		stroke = new JMenu("ç”»ç¬”");
-		help = new JMenu("å¸®åŠ©");
+		// ²Ëµ¥²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
+		file = new JMenu("ÎÄ¼ş");
+		edit = new JMenu("±à¼­");
+		background = new JMenu("±³¾°");
+		color = new JMenu("ÑÕÉ«");
+		stroke = new JMenu("»­±Ê");
+		help = new JMenu("°ïÖú");
 
-		// èœå•ä¸­æ·»åŠ å¿«æ·é”®
+		// ²Ëµ¥ÖĞÌí¼Ó¿ì½İ¼ü
 		file.setMnemonic('F');
 		edit.setMnemonic('E');
 		background.setMnemonic('B');
@@ -117,17 +132,17 @@ public class DrawPad extends JFrame implements ActionListener {
 		bar.add(stroke);
 		bar.add(help);
 
-		// ç•Œé¢æ·»åŠ èœå•æ¡
+		// ½çÃæÌí¼Ó²Ëµ¥Ìõ
 		setJMenuBar(bar);
 
 		// File
-		nf = new ImageIcon("images/newfile.png");// åˆ›å»ºå›¾æ ‡
+		nf = new ImageIcon("images/newfile.png");// ´´½¨Í¼±ê
 		sf = new ImageIcon("images/savefile.png");
 		of = new ImageIcon("images/openfile.png");
-		newfile = new JMenuItem("æ–°å»º", nf);
-		openfile = new JMenuItem("æ‰“å¼€", of);
-		savefile = new JMenuItem("ä¿å­˜", sf);
-		exit = new JMenuItem("é€€å‡º");
+		newfile = new JMenuItem("ĞÂ½¨", nf);
+		openfile = new JMenuItem("´ò¿ª", of);
+		savefile = new JMenuItem("±£´æ", sf);
+		exit = new JMenuItem("ÍË³ö");
 		// File
 		newfile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		openfile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
@@ -146,33 +161,33 @@ public class DrawPad extends JFrame implements ActionListener {
 		file.add(exit);
 
 		// Color
-		colorchoice = new JMenuItem("è°ƒè‰²æ¿");
+		colorchoice = new JMenuItem("µ÷É«°å");
 		colorchoice.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
 		colorchoice.addActionListener(this);
 		color.add(colorchoice);
 
 		// Help
-		helpmain = new JMenuItem("å¸®åŠ©ä¸»é¢˜");
-		helpin = new JMenuItem("å…³äºOnePad");
+		helpmain = new JMenuItem("°ïÖúÖ÷Ìâ");
+		helpin = new JMenuItem("¹ØÓÚOnePad");
 		// Help
 		helpin.addActionListener(this);
 		helpmain.addActionListener(this);
 		// Help
 		help.add(helpmain);
-		help.addSeparator();// æ·»åŠ åˆ†éš”ç¬¦
+		help.addSeparator();// Ìí¼Ó·Ö¸ô·û
 		help.add(helpin);
 
 		// Stroke
-		strokeitem = new JMenuItem("è®¾ç½®ç”»ç¬”");
+		strokeitem = new JMenuItem("ÉèÖÃ»­±Ê");
 		strokeitem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		stroke.add(strokeitem);
 		strokeitem.addActionListener(this);
 
 		// Edit
-		editgraph = new JMenuItem("ç¼–è¾‘å›¾å½¢");
-		editcolor = new JMenuItem("æ›´æ”¹é¢œè‰²");
-		editstroke = new JMenuItem("æ›´æ”¹çº¿å‹");
-		edittext = new JMenuItem("ç¼–è¾‘æ–‡å­—");
+		editgraph = new JMenuItem("±à¼­Í¼ĞÎ");
+		editcolor = new JMenuItem("¸ü¸ÄÑÕÉ«");
+		editstroke = new JMenuItem("¸ü¸ÄÏßĞÍ");
+		edittext = new JMenuItem("±à¼­ÎÄ×Ö");
 		// Edit
 		editgraph.addActionListener(this);
 		editcolor.addActionListener(this);
@@ -184,27 +199,27 @@ public class DrawPad extends JFrame implements ActionListener {
 		edit.add(editstroke);
 		edit.add(edittext);
 
-		// å­—ä½“éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
-		CheckBoxHandler CHandler = new CheckBoxHandler();// å­—ä½“æ ·å¼å¤„ç†ç±»
-		bold = new JCheckBox("ç²—ä½“");
-		bold.setFont(new Font(Font.DIALOG, Font.BOLD, 30));// è®¾ç½®å­—ä½“
-		bold.addItemListener(CHandler);// boldæ³¨å†Œç›‘å¬
-		italic = new JCheckBox("æ–œä½“");
-		italic.setFont(new Font(Font.DIALOG, Font.ITALIC, 30));// è®¾ç½®å­—ä½“
-		italic.addItemListener(CHandler);// italicæ³¨å†Œç›‘å¬
-		plain = new JCheckBox("å¸¸è§„");
+		// ×ÖÌå²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
+		CheckBoxHandler CHandler = new CheckBoxHandler();// ×ÖÌåÑùÊ½´¦ÀíÀà
+		bold = new JCheckBox("´ÖÌå");
+		bold.setFont(new Font(Font.DIALOG, Font.BOLD, 30));// ÉèÖÃ×ÖÌå
+		bold.addItemListener(CHandler);// bold×¢²á¼àÌı
+		italic = new JCheckBox("Ğ±Ìå");
+		italic.setFont(new Font(Font.DIALOG, Font.ITALIC, 30));// ÉèÖÃ×ÖÌå
+		italic.addItemListener(CHandler);// italic×¢²á¼àÌı
+		plain = new JCheckBox("³£¹æ");
 		plain.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		plain.addItemListener(CHandler);
 
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();// è®¡ç®—æœºä¸Šå­—ä½“å¯ç”¨çš„åç§°
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();// ¼ÆËã»úÉÏ×ÖÌå¿ÉÓÃµÄÃû³Æ
 		fontName = ge.getAvailableFontFamilyNames();
-		styles = new JComboBox(fontName);// ä¸‹æ‹‰åˆ—è¡¨çš„åˆå§‹åŒ–
-		styles.addItemListener(CHandler);// stylesæ³¨å†Œç›‘å¬
-		styles.setMaximumSize(new Dimension(200, 50));// è®¾ç½®ä¸‹æ‹‰åˆ—è¡¨çš„æœ€å¤§å°ºå¯¸
+		styles = new JComboBox(fontName);// ÏÂÀ­ÁĞ±íµÄ³õÊ¼»¯
+		styles.addItemListener(CHandler);// styles×¢²á¼àÌı
+		styles.setMaximumSize(new Dimension(200, 50));// ÉèÖÃÏÂÀ­ÁĞ±íµÄ×î´ó³ß´ç
 		styles.setMinimumSize(new Dimension(100, 40));
-		styles.setFont(new Font(Font.DIALOG, Font.BOLD, 20));// è®¾ç½®å­—ä½“
-		// æ·»åŠ å­—ä½“å¼æ ·æ 
-		JToolBar fontpanel = new JToolBar("å­—ä½“é€‰é¡¹", JToolBar.HORIZONTAL);// æ°´å¹³æ–¹å‘
+		styles.setFont(new Font(Font.DIALOG, Font.BOLD, 20));// ÉèÖÃ×ÖÌå
+		// Ìí¼Ó×ÖÌåÊ½ÑùÀ¸
+		JToolBar fontpanel = new JToolBar("×ÖÌåÑ¡Ïî", JToolBar.HORIZONTAL);// Ë®Æ½·½Ïò
 		fontpanel.setLayout(new GridLayout(2, 3, 0, 0));
 		fontpanel.setFloatable(false);
 		fontpanel.add(bold);
@@ -212,13 +227,13 @@ public class DrawPad extends JFrame implements ActionListener {
 		fontpanel.add(plain);
 		fontpanel.add(styles);
 
-		// çŠ¶æ€æ éƒ¨åˆ†--------------------------------------------------------------------------------------------------------------------------------------------
+		// ×´Ì¬À¸²¿·Ö--------------------------------------------------------------------------------------------------------------------------------------------
 		startbar = new JLabel("OnePad");
 
-		// è°ƒè‰²éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
+		// µ÷É«²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
 		Icon cicon = new ImageIcon("images/color.png");
 		cbutton = new JButton("", cicon);
-		cbutton.setToolTipText("è‡ªå®šä¹‰é¢œè‰²");
+		cbutton.setToolTipText("×Ô¶¨ÒåÑÕÉ«");
 		cbutton.addActionListener(e -> drawarea.chooseColor());
 
 		colorButton = new JButton[20];//
@@ -250,19 +265,19 @@ public class DrawPad extends JFrame implements ActionListener {
 		colorButton[17].setBackground(new Color(0x07a0e6));
 		colorButton[18].setBackground(new Color(0xd9a2dc));
 		colorButton[19].setBackground(new Color(0x9c4ca1));
-		for (int i = 0; i < 20; i++) {// ç»™é¢œè‰²æŒ‰é’®æ·»åŠ äº‹ä»¶
+		for (int i = 0; i < 20; i++) {// ¸øÑÕÉ«°´Å¥Ìí¼ÓÊÂ¼ş
 			int finalI = i;
 			colorButton[i].addActionListener(e -> drawarea.colorBar(colorButton[finalI].getBackground().getRed(),
 					colorButton[finalI].getBackground().getGreen(), colorButton[finalI].getBackground().getBlue()));
 		}
 
-		// ç”»æ¿éƒ¨åˆ†----------------------------------------------------------------------------------------------------------------------------------------------
+		// »­°å²¿·Ö----------------------------------------------------------------------------------------------------------------------------------------------
 		drawarea = new DrawArea(this);
 
 		helpobject = new Help(this);
 		fileclass = new FileClass(this, drawarea);
 
-		// è®¾ç½®å„éƒ¨åˆ†ä½ç½®----------------------------------------------------------------------------------------------------------------------------------------
+		// ÉèÖÃ¸÷²¿·ÖÎ»ÖÃ----------------------------------------------------------------------------------------------------------------------------------------
 		Container con = getContentPane();//
 		Toolkit tool = getToolkit();//
 		Dimension dim = tool.getScreenSize();//
@@ -294,13 +309,7 @@ public class DrawPad extends JFrame implements ActionListener {
 		startbar.setText(s);
 	}
 
-	/*
-	 * private String tiptext[] = {//è¿™é‡Œæ˜¯é¼ æ ‡ç§»åˆ°ç›¸åº”çš„æŒ‰é’®ä¸Šç»™å‡ºç›¸åº”çš„æç¤º
-            "æ–°å»ºä¸€ä¸ªå›¾ç‰‡", "æ‰“å¼€å›¾ç‰‡", "ä¿å­˜å›¾ç‰‡", "éšç¬”ç”»", "ç”»ç›´çº¿",
-            "ç”»ç©ºå¿ƒçš„çŸ©å½¢", "å¡«å……çŸ©å½¢", "ç”»ç©ºå¿ƒçš„æ¤­åœ†", "å¡«å……æ¤­åœ†", "ç”»ç©ºå¿ƒçš„åœ†",
-            "å¡«å……åœ†", "ç”»åœ†è§’çŸ©å½¢", "å¡«å……åœ†è§’çŸ©å½¢", "æ–‡å­—çš„è¾“å…¥", "é€‰æ‹©çº¿æ¡çš„ç²—ç»†",
-            "åˆ é™¤ä¸€ä¸ªå›¾å½¢", "ç§»åŠ¨å›¾å½¢", "å¡«å……å›¾å½¢"};
-	 * */
+
 	//
 	public void actionPerformed(ActionEvent e) {
         if(e.getSource()==button[9]) {
@@ -356,34 +365,34 @@ public class DrawPad extends JFrame implements ActionListener {
 		} else if (e.getSource() == helpin) {
 			helpobject.AboutBook();//
 		} else if (e.getSource() == helpmain) {
-			helpobject.MainHelp();// î•½
+			helpobject.MainHelp();// ¢˜
 		}
 	}
 
-	// å­—ä½“æ ·å¼å¤„ç†ç±»ï¼ˆç²—ä½“ã€æ–œä½“ã€å­—ä½“åç§°ï¼‰
+	// ×ÖÌåÑùÊ½´¦ÀíÀà£¨´ÖÌå¡¢Ğ±Ìå¡¢×ÖÌåÃû³Æ£©
 	class CheckBoxHandler implements ItemListener {
 
 		public void itemStateChanged(ItemEvent ie) {
-			if (ie.getSource() == bold)// å­—ä½“ç²—ä½“
+			if (ie.getSource() == bold)// ×ÖÌå´ÖÌå
 			{
 				if (ie.getStateChange() == ItemEvent.SELECTED)
 					drawarea.setFont(1, Font.BOLD);
 				else
 					drawarea.setFont(1, Font.PLAIN);
-			} else if (ie.getSource() == italic)// å­—ä½“æ–œä½“
+			} else if (ie.getSource() == italic)// ×ÖÌåĞ±Ìå
 			{
 				if (ie.getStateChange() == ItemEvent.SELECTED)
 					drawarea.setFont(2, Font.ITALIC);
 				else
 					drawarea.setFont(2, Font.PLAIN);
 
-			} else if (ie.getSource() == plain)// å­—ä½“
+			} else if (ie.getSource() == plain)// ×ÖÌå
 			{
 				if (ie.getStateChange() == ItemEvent.SELECTED)
 					drawarea.setFont(1, Font.PLAIN);
 				else
 					drawarea.setFont(1, Font.PLAIN);
-			} else if (ie.getSource() == styles)// å­—ä½“çš„åç§°
+			} else if (ie.getSource() == styles)// ×ÖÌåµÄÃû³Æ
 			{
 				drawarea.style = fontName[styles.getSelectedIndex()];
 			}

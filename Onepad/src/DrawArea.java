@@ -13,55 +13,55 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
-//ç»˜å›¾åŒºç±»ï¼ˆå„ç§å›¾å½¢çš„ç»˜åˆ¶å’Œé¼ æ ‡äº‹ä»¶ï¼‰
+//»æÍ¼ÇøÀà£¨¸÷ÖÖÍ¼ĞÎµÄ»æÖÆºÍÊó±êÊÂ¼ş£©
 public class DrawArea extends JPanel {
 	DrawPad drawpad = null;
-	Drawing[] itemList = new Drawing[5000];// ç»˜åˆ¶å›¾å½¢åŠç›¸å…³å‚æ•°å…¨éƒ¨å­˜åˆ°è¯¥æ•°ç»„
+	Drawing[] itemList = new Drawing[5000];// »æÖÆÍ¼ĞÎ¼°Ïà¹Ø²ÎÊıÈ«²¿´æµ½¸ÃÊı×é
 
-	int chooseni = 0;// å½“å‰é€‰ä¸­å›¾å½¢çš„æ•°ç»„ä¸‹æ ‡
-	int x0, y0;// è®°å½•ç§»åŠ¨å›¾å½¢é¼ æ ‡èµ·å§‹ä½ç½®
-	private int chosenStatus = 3;// è®¾ç½®é»˜è®¤åŸºæœ¬å›¾å½¢çŠ¶æ€ä¸ºéšç¬”ç”»
-	int index = 0;// å½“å‰å·²ç»ç»˜åˆ¶çš„å›¾å½¢æ•°ç›®
-	private Color color = Color.black;// å½“å‰ç”»ç¬”çš„é¢œè‰²
-	int R, G, B;// ç”¨æ¥å­˜æ”¾å½“å‰é¢œè‰²çš„å½©å€¼
-	int f1, f2;// ç”¨æ¥å­˜æ”¾å½“å‰å­—ä½“çš„é£æ ¼
-	String style;// å­˜æ”¾å½“å‰å­—ä½“
-	float stroke = 1.0f;// è®¾ç½®ç”»ç¬”çš„ç²—ç»† ï¼Œé»˜è®¤çš„æ˜¯ 1.0
+	int chooseni = 0;// µ±Ç°Ñ¡ÖĞÍ¼ĞÎµÄÊı×éÏÂ±ê
+	int x0, y0;// ¼ÇÂ¼ÒÆ¶¯Í¼ĞÎÊó±êÆğÊ¼Î»ÖÃ
+	private int chosenStatus = 3;// ÉèÖÃÄ¬ÈÏ»ù±¾Í¼ĞÎ×´Ì¬ÎªËæ±Ê»­
+	int index = 0;// µ±Ç°ÒÑ¾­»æÖÆµÄÍ¼ĞÎÊıÄ¿
+	private Color color = Color.black;// µ±Ç°»­±ÊµÄÑÕÉ«
+	int R, G, B;// ÓÃÀ´´æ·Åµ±Ç°ÑÕÉ«µÄ²ÊÖµ
+	int f1, f2;// ÓÃÀ´´æ·Åµ±Ç°×ÖÌåµÄ·ç¸ñ
+	String style;// ´æ·Åµ±Ç°×ÖÌå
+	float stroke = 1.0f;// ÉèÖÃ»­±ÊµÄ´ÖÏ¸ £¬Ä¬ÈÏµÄÊÇ 1.0
 	JTextArea tarea = new JTextArea("");
 	int tx, ty;
 
 	DrawArea(DrawPad dp) {
 		drawpad = dp;
 		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		// æŠŠé¼ æ ‡è®¾ç½®æˆåå­—å½¢
-		setBackground(Color.white);// è®¾ç½®ç»˜åˆ¶åŒºçš„èƒŒæ™¯æ˜¯ç™½è‰²
-		addMouseListener(new MouseA());// æ·»åŠ é¼ æ ‡äº‹ä»¶
+		// °ÑÊó±êÉèÖÃ³ÉÊ®×ÖĞÎ
+		setBackground(Color.white);// ÉèÖÃ»æÖÆÇøµÄ±³¾°ÊÇ°×É«
+		addMouseListener(new MouseA());// Ìí¼ÓÊó±êÊÂ¼ş
 		addMouseMotionListener(new MouseB());
 		createNewitem();
 	}
 
-	public void paintComponent(Graphics g) {// repaint()éœ€è¦è°ƒç”¨
+	public void paintComponent(Graphics g) {// repaint()ĞèÒªµ÷ÓÃ
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		int j = 0;
 		while (j <= index) {
 			draw(g2d, itemList[j]);
 			j++;
-		} // å°†itemListæ•°ç»„é‡ç”»ä¸€é
+		} // ½«itemListÊı×éÖØ»­Ò»±é
 	}
 
 	void draw(Graphics2D g2d, Drawing i) {
-		i.draw(g2d);// å°†ç”»ç¬”ä¼ åˆ°ä¸ªå„ç±»çš„å­ç±»ä¸­
+		i.draw(g2d);// ½«»­±Ê´«µ½¸ö¸÷ÀàµÄ×ÓÀàÖĞ
 	}
 
-	// æ–°å»ºä¸€ä¸ªå›¾å½¢çš„åŸºæœ¬å•å…ƒå¯¹è±¡çš„ç¨‹åºæ®µ
+	// ĞÂ½¨Ò»¸öÍ¼ĞÎµÄ»ù±¾µ¥Ôª¶ÔÏóµÄ³ÌĞò¶Î
 	void createNewitem() {
-		if (chosenStatus == 13)// å­—ä½“çš„è¾“å…¥å…‰æ ‡ç›¸åº”çš„è®¾ç½®ä¸ºæ–‡æœ¬è¾“å…¥æ ¼å¼
+		if (chosenStatus == 13)// ×ÖÌåµÄÊäÈë¹â±êÏàÓ¦µÄÉèÖÃÎªÎÄ±¾ÊäÈë¸ñÊ½
 			setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		else
 			setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
-		switch (chosenStatus) {// buttonè§¦å‘æ”¹å˜currentChoiceçš„å€¼ï¼Œç”±æ­¤å¾—åˆ°å„äº‹ä»¶çš„å…¥å£
+		switch (chosenStatus) {// button´¥·¢¸Ä±äcurrentChoiceµÄÖµ£¬ÓÉ´ËµÃµ½¸÷ÊÂ¼şµÄÈë¿Ú
 		case 2:
 			itemList[index] = new Eraser();
 			break;
@@ -109,27 +109,27 @@ public class DrawArea extends JPanel {
 
 	}
 
-	public void setIndex(int x) {// è®¾ç½®indexçš„æ¥å£
+	public void setIndex(int x) {// ÉèÖÃindexµÄ½Ó¿Ú
 		index = x;
 	}
 
-	public int getIndex() {// è¯»å–indexçš„æ¥å£
+	public int getIndex() {// ¶ÁÈ¡indexµÄ½Ó¿Ú
 		return index;
 	}
 
-	public void setColor(Color color)// è®¾ç½®é¢œè‰²çš„å€¼
+	public void setColor(Color color)// ÉèÖÃÑÕÉ«µÄÖµ
 	{
 		this.color = color;
 	}
 
-	public void setStroke(float f)// è®¾ç½®ç”»ç¬”ç²—ç»†çš„æ¥å£
+	public void setStroke(float f)// ÉèÖÃ»­±Ê´ÖÏ¸µÄ½Ó¿Ú
 	{
 		stroke = f;
 	}
 
-	public void chooseColor()// é€‰æ‹©å½“å‰é¢œè‰²
+	public void chooseColor()// Ñ¡Ôñµ±Ç°ÑÕÉ«
 	{
-		color = JColorChooser.showDialog(drawpad, "è¯·é€‰æ‹©é¢œè‰²", color);
+		color = JColorChooser.showDialog(drawpad, "ÇëÑ¡ÔñÑÕÉ«", color);
 		try {
 			R = color.getRed();
 			G = color.getGreen();
@@ -153,9 +153,9 @@ public class DrawArea extends JPanel {
 		itemList[index].B = B;
 	}
 
-	public void changeColor()// æ”¹å˜å½“å‰å›¾ç‰‡çš„é¢œè‰²
+	public void changeColor()// ¸Ä±äµ±Ç°Í¼Æ¬µÄÑÕÉ«
 	{
-		color = JColorChooser.showDialog(drawpad, "è¯·é€‰æ‹©é¢œè‰²", color);
+		color = JColorChooser.showDialog(drawpad, "ÇëÑ¡ÔñÑÕÉ«", color);
 		try {
 			R = color.getRed();
 			G = color.getGreen();
@@ -170,10 +170,10 @@ public class DrawArea extends JPanel {
 		itemList[chooseni].B = B;
 	}
 
-	public void setStroke()// ç”»ç¬”ç²—ç»†çš„è°ƒæ•´
+	public void setStroke()// »­±Ê´ÖÏ¸µÄµ÷Õû
 	{
 		String input;
-		input = JOptionPane.showInputDialog("è¯·è¾“å…¥ç”»ç¬”çš„ç²—ç»†( >0 )");
+		input = JOptionPane.showInputDialog("ÇëÊäÈë»­±ÊµÄ´ÖÏ¸( >0 )");
 		try {
 			stroke = Float.parseFloat(input);
 
@@ -185,10 +185,10 @@ public class DrawArea extends JPanel {
 
 	}
 
-	public void changeStroke()// ç”»ç¬”ç²—ç»†çš„æ”¹å˜ï¼ˆä¸»è¦é’ˆå¯¹ç©ºå¿ƒå›¾å½¢ã€ç›´çº¿ã€éšç¬”ç”»ï¼‰
+	public void changeStroke()// »­±Ê´ÖÏ¸µÄ¸Ä±ä£¨Ö÷ÒªÕë¶Ô¿ÕĞÄÍ¼ĞÎ¡¢Ö±Ïß¡¢Ëæ±Ê»­£©
 	{
 		String input;
-		input = JOptionPane.showInputDialog("è¯·è¾“å…¥ç”»ç¬”çš„ç²—ç»†( >0 )");
+		input = JOptionPane.showInputDialog("ÇëÊäÈë»­±ÊµÄ´ÖÏ¸( >0 )");
 		try {
 			stroke = Float.parseFloat(input);
 
@@ -200,15 +200,15 @@ public class DrawArea extends JPanel {
 
 	}
 
-	public void setChosenStatus(int i)// è®¾ç½®å½“å‰é€‰æ‹©ï¼ˆbuttonè§¦å‘æ—¶ä½¿ç”¨ï¼‰
+	public void setChosenStatus(int i)// ÉèÖÃµ±Ç°Ñ¡Ôñ£¨button´¥·¢Ê±Ê¹ÓÃ£©
 	{
 		chosenStatus = i;
 	}
 
-	public void changeText() {// ä¿®æ”¹å·²æœ‰æ–‡å­—
+	public void changeText() {// ĞŞ¸ÄÒÑÓĞÎÄ×Ö
 		String input;
-		input = JOptionPane.showInputDialog("è¯·è¾“å…¥ä½ è¦ä¿®æ”¹ä¸ºçš„æ–‡å­—");
-		itemList[chooseni].s1 = input;// é‡è®¾é€‰ä¸­æ–‡æœ¬æ¡†çš„å„å‚æ•°
+		input = JOptionPane.showInputDialog("ÇëÊäÈëÄãÒªĞŞ¸ÄÎªµÄÎÄ×Ö");
+		itemList[chooseni].s1 = input;// ÖØÉèÑ¡ÖĞÎÄ±¾¿òµÄ¸÷²ÎÊı
 		itemList[chooseni].type = f1 + f2;
 		itemList[chooseni].s2 = style;
 		itemList[chooseni].stroke = stroke;
@@ -217,7 +217,7 @@ public class DrawArea extends JPanel {
 		itemList[chooseni].B = B;
 	}
 
-	public void setFont(int i, int font)// è®¾ç½®å­—ä½“
+	public void setFont(int i, int font)// ÉèÖÃ×ÖÌå
 	{
 		if (i == 1) {
 			f1 = font;
@@ -225,8 +225,8 @@ public class DrawArea extends JPanel {
 			f2 = font;
 	}
 
-	public void fillColor(Drawing nowdrawing) {// å¡«å……
-		int choice = nowdrawing.gettypechoice();// ç”¨äºåˆ¤æ–­å¡«å……å›¾å½¢ç±»å‹
+	public void fillColor(Drawing nowdrawing) {// Ìî³ä
+		int choice = nowdrawing.gettypechoice();// ÓÃÓÚÅĞ¶ÏÌî³äÍ¼ĞÎÀàĞÍ
 		if (choice == 5) {
 			itemList[chooseni] = new fillRect();
 		} else if (choice == 7) {
@@ -245,80 +245,80 @@ public class DrawArea extends JPanel {
 		itemList[chooseni].B = B;
 	}
 
-	public void deletePaint(Drawing nowdrawing) {// åˆ é™¤
+	public void deletePaint(Drawing nowdrawing) {// É¾³ı
 		int choice = nowdrawing.gettypechoice();
 		if (choice >= 2 && choice <= 13) {
 			itemList[chooseni] = new Line();
 		}
 	}
 
-	// é¼ æ ‡äº‹ä»¶MouseAç±»ç»§æ‰¿äº†MouseAdapterï¼Œç”¨æ¥å®Œæˆé¼ æ ‡çš„å“åº”äº‹ä»¶çš„æ“ä½œ
+	// Êó±êÊÂ¼şMouseAÀà¼Ì³ĞÁËMouseAdapter£¬ÓÃÀ´Íê³ÉÊó±êµÄÏìÓ¦ÊÂ¼şµÄ²Ù×÷
 	class MouseA extends MouseAdapter {
 		public void mouseEntered(MouseEvent me) {
-			// é¼ æ ‡è¿›å…¥
-			drawpad.setStratBar("é¼ æ ‡è¿›å…¥åœ¨ï¼š[" + me.getX() + " ," + me.getY() + "]");// è®¾ç½®çŠ¶æ€æ æç¤º
+			// Êó±ê½øÈë
+			drawpad.setStratBar("Êó±ê½øÈëÔÚ£º[" + me.getX() + " ," + me.getY() + "]");// ÉèÖÃ×´Ì¬À¸ÌáÊ¾
 		}
 
 		public void mouseExited(MouseEvent me) {
-			// é¼ æ ‡é€€å‡º
-			drawpad.setStratBar("é¼ æ ‡é€€å‡ºåœ¨ï¼š[" + me.getX() + " ," + me.getY() + "]");
+			// Êó±êÍË³ö
+			drawpad.setStratBar("Êó±êÍË³öÔÚ£º[" + me.getX() + " ," + me.getY() + "]");
 		}
 
 		public void mousePressed(MouseEvent me) {
-			// é¼ æ ‡æŒ‰ä¸‹
-			drawpad.setStratBar("é¼ æ ‡æŒ‰ä¸‹åœ¨ï¼š[" + me.getX() + " ," + me.getY() + "]");
+			// Êó±ê°´ÏÂ
+			drawpad.setStratBar("Êó±ê°´ÏÂÔÚ£º[" + me.getX() + " ," + me.getY() + "]");
 			if (chosenStatus >= 15 && chosenStatus <= 21)
-			// åˆ é™¤ï¼Œç§»åŠ¨ï¼Œæ›´æ”¹å¤§å°ï¼Œæ›´æ”¹é¢œè‰²ï¼Œæ›´æ”¹çº¿å‹ï¼Œå¡«å……å…­ç§æ“ä½œéƒ½éœ€è¦é€‰å®šå›¾å½¢
+			// É¾³ı£¬ÒÆ¶¯£¬¸ü¸Ä´óĞ¡£¬¸ü¸ÄÑÕÉ«£¬¸ü¸ÄÏßĞÍ£¬Ìî³äÁùÖÖ²Ù×÷¶¼ĞèÒªÑ¡¶¨Í¼ĞÎ
 			{
 				for (chooseni = index - 1; chooseni >= 0; chooseni--) {
-					// ä»ååˆ°å‰å¯»æ‰¾å½“å‰é¼ æ ‡æ˜¯å¦åœ¨æŸä¸ªå›¾å½¢å†…éƒ¨
+					// ´Óºóµ½Ç°Ñ°ÕÒµ±Ç°Êó±êÊÇ·ñÔÚÄ³¸öÍ¼ĞÎÄÚ²¿
 					if (itemList[chooseni].in(me.getX(), me.getY())) {
-						if (chosenStatus == 16)// ç§»åŠ¨å›¾å½¢éœ€è¦è®°å½•pressæ—¶çš„åæ ‡
+						if (chosenStatus == 16)// ÒÆ¶¯Í¼ĞÎĞèÒª¼ÇÂ¼pressÊ±µÄ×ø±ê
 						{
 							x0 = me.getX();
 							y0 = me.getY();
 						}
-						break;// å…¶å®ƒæ“ä½œåªéœ€æ‰¾åˆ°currentiå³å¯
+						break;// ÆäËü²Ù×÷Ö»ĞèÕÒµ½currenti¼´¿É
 					}
 				}
-				if (chooseni >= 0) {// æœ‰å›¾å½¢è¢«é€‰ä¸­
-					setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));// æ›´æ”¹é¼ æ ‡æ ·å¼ä¸ºæ‰‹å½¢
-					if (chosenStatus == 20) {// è§¦å‘å¡«å……
+				if (chooseni >= 0) {// ÓĞÍ¼ĞÎ±»Ñ¡ÖĞ
+					setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));// ¸ü¸ÄÊó±êÑùÊ½ÎªÊÖĞÎ
+					if (chosenStatus == 20) {// ´¥·¢Ìî³ä
 						fillColor(itemList[chooseni]);
-						setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));// é¼ æ ‡æ ·å¼å˜å›åå­—èŠ±
+						setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));// Êó±êÑùÊ½±ä»ØÊ®×Ö»¨
 						repaint();
-					} else if (chosenStatus == 15) {// è§¦å‘åˆ é™¤
+					} else if (chosenStatus == 15) {// ´¥·¢É¾³ı
 						deletePaint(itemList[chooseni]);
 						setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 						repaint();
-					} else if (chosenStatus == 18) {// æ”¹å˜å·²æœ‰å›¾å½¢çš„é¢œè‰²
+					} else if (chosenStatus == 18) {// ¸Ä±äÒÑÓĞÍ¼ĞÎµÄÑÕÉ«
 						changeColor();
 						repaint();
-					} else if (chosenStatus == 19) {// æ”¹å˜å·²æœ‰å›¾å½¢çš„çº¿å‹
+					} else if (chosenStatus == 19) {// ¸Ä±äÒÑÓĞÍ¼ĞÎµÄÏßĞÍ
 						changeStroke();
 						repaint();
-					} else if (chosenStatus == 21) {// æ”¹å˜å·²æœ‰æ–‡å­—
+					} else if (chosenStatus == 21) {// ¸Ä±äÒÑÓĞÎÄ×Ö
 						changeText();
 						repaint();
 					}
 				}
 			} else {
 				itemList[index].x1 = itemList[index].x2 = me.getX();
-				itemList[index].y1 = itemList[index].y2 = me.getY();// x1,x2,y1,y2åˆå§‹åŒ–
-				// å¦‚æœå½“å‰é€‰æ‹©ä¸ºéšç¬”ç”»åˆ™è¿›è¡Œä¸‹é¢çš„æ“ä½œ
+				itemList[index].y1 = itemList[index].y2 = me.getY();// x1,x2,y1,y2³õÊ¼»¯
+				// Èç¹ûµ±Ç°Ñ¡ÔñÎªËæ±Ê»­Ôò½øĞĞÏÂÃæµÄ²Ù×÷
 				if (chosenStatus == 2) {
 					itemList[index].x1 = itemList[index].x2 = me.getX();
 					itemList[index].y1 = itemList[index].y2 = me.getY();
 					index++;
-					createNewitem();// åˆ›å»ºæ–°çš„å›¾å½¢çš„åŸºæœ¬å•å…ƒå¯¹è±¡
+					createNewitem();// ´´½¨ĞÂµÄÍ¼ĞÎµÄ»ù±¾µ¥Ôª¶ÔÏó
 				}
 				if (chosenStatus == 3) {
 					itemList[index].x1 = itemList[index].x2 = me.getX();
 					itemList[index].y1 = itemList[index].y2 = me.getY();
 					index++;
-					createNewitem();// åˆ›å»ºæ–°çš„å›¾å½¢çš„åŸºæœ¬å•å…ƒå¯¹è±¡
+					createNewitem();// ´´½¨ĞÂµÄÍ¼ĞÎµÄ»ù±¾µ¥Ôª¶ÔÏó
 				}
-				// å¦‚æœé€‰æ‹©å›¾å½¢çš„æ–‡å­—è¾“å…¥ï¼Œåˆ™è¿›è¡Œä¸‹é¢çš„æ“ä½œ
+				// Èç¹ûÑ¡ÔñÍ¼ĞÎµÄÎÄ×ÖÊäÈë£¬Ôò½øĞĞÏÂÃæµÄ²Ù×÷
 				if (chosenStatus == 13) {
 					tx = me.getX();
 					ty = me.getY();
@@ -329,11 +329,11 @@ public class DrawArea extends JPanel {
 		}
 
 		public void mouseReleased(MouseEvent me) {
-			// é¼ æ ‡æ¾å¼€
-			drawpad.setStratBar("é¼ æ ‡æ¾å¼€åœ¨ï¼š[" + me.getX() + " ," + me.getY() + "]");
-			if (chosenStatus == 16) {// ç§»åŠ¨ç»“æŸ
+			// Êó±êËÉ¿ª
+			drawpad.setStratBar("Êó±êËÉ¿ªÔÚ£º[" + me.getX() + " ," + me.getY() + "]");
+			if (chosenStatus == 16) {// ÒÆ¶¯½áÊø
 
-				if (chooseni >= 0) {// é¼ æ ‡æˆåŠŸé€‰æ‹©äº†æŸä¸ªå›¾å½¢
+				if (chooseni >= 0) {// Êó±ê³É¹¦Ñ¡ÔñÁËÄ³¸öÍ¼ĞÎ
 					itemList[chooseni].x1 = itemList[chooseni].x1 + me.getX() - x0;
 					itemList[chooseni].y1 = itemList[chooseni].y1 + me.getY() - y0;
 					itemList[chooseni].x2 = itemList[chooseni].x2 + me.getX() - x0;
@@ -341,37 +341,37 @@ public class DrawArea extends JPanel {
 					repaint();
 					setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 				}
-			} else if (chosenStatus == 17) {// æ”¾å¤§ç¼©å°ç»“æŸ
-				if (chooseni >= 0) {// é¼ æ ‡æˆåŠŸé€‰æ‹©äº†æŸä¸ªå›¾å½¢
+			} else if (chosenStatus == 17) {// ·Å´óËõĞ¡½áÊø
+				if (chooseni >= 0) {// Êó±ê³É¹¦Ñ¡ÔñÁËÄ³¸öÍ¼ĞÎ
 					itemList[chooseni].x2 = me.getX();
 					itemList[chooseni].y2 = me.getY();
 					repaint();
 					setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 				}
 			} else {
-				if (chosenStatus == 3) {// éšç¬”ç”»ç»˜åˆ¶ç»“æŸ
+				if (chosenStatus == 3) {// Ëæ±Ê»­»æÖÆ½áÊø
 					itemList[index].x1 = me.getX();
 					itemList[index].y1 = me.getY();
-				} else if (chosenStatus == 2) {// æ“¦é™¤ç»˜åˆ¶ç»“æŸ
+				} else if (chosenStatus == 2) {// ²Á³ı»æÖÆ½áÊø
 					itemList[index].x1 = me.getX();
 					itemList[index].y1 = me.getY();
-				} else if (chosenStatus == 13) {// æ–‡æœ¬æ¡†ç»˜åˆ¶ç»“æŸ
+				} else if (chosenStatus == 13) {// ÎÄ±¾¿ò»æÖÆ½áÊø
 					tarea.setBounds(Math.min(tx, me.getX()) + 130, Math.min(ty, me.getY()), Math.abs(tx - me.getX()),
-							Math.abs(ty - me.getY()));// ç»˜åˆ¶æ–‡æœ¬æ¡†
+							Math.abs(ty - me.getY()));// »æÖÆÎÄ±¾¿ò
 					String input;
-					input = JOptionPane.showInputDialog("è¯·è¾“å…¥ä½ è¦å†™å…¥çš„æ–‡å­—");
+					input = JOptionPane.showInputDialog("ÇëÊäÈëÄãÒªĞ´ÈëµÄÎÄ×Ö");
 					tarea.setText(input);
 					itemList[index].s1 = input;
-					itemList[index].type = f1 + f2;// è®¾ç½®ç²—ä½“ã€æ–œä½“
+					itemList[index].type = f1 + f2;// ÉèÖÃ´ÖÌå¡¢Ğ±Ìå
 					itemList[index].x2 = me.getX();
 					itemList[index].y2 = me.getY();
-					itemList[index].s2 = style;// è®¾ç½®å­—ä½“
+					itemList[index].s2 = style;// ÉèÖÃ×ÖÌå
 
 					index++;
 					chosenStatus = 13;
-					createNewitem();// åˆ›å»ºæ–°çš„å›¾å½¢çš„åŸºæœ¬å•å…ƒå¯¹è±¡
+					createNewitem();// ´´½¨ĞÂµÄÍ¼ĞÎµÄ»ù±¾µ¥Ôª¶ÔÏó
 					repaint();
-					tarea.setText("");// é‡è®¾æ–‡æœ¬æ¡†ï¼Œä¸ºä¸‹ä¸€æ¬¡ä½¿ç”¨åšå‡†å¤‡
+					tarea.setText("");// ÖØÉèÎÄ±¾¿ò£¬ÎªÏÂÒ»´ÎÊ¹ÓÃ×ö×¼±¸
 					tarea.setBounds(tx, ty, 0, 0);
 				}
 				if (chosenStatus >= 2 && chosenStatus <= 12) {
@@ -379,31 +379,31 @@ public class DrawArea extends JPanel {
 					itemList[index].y2 = me.getY();
 					repaint();
 					index++;
-					createNewitem();// åˆ›å»ºæ–°çš„å›¾å½¢çš„åŸºæœ¬å•å…ƒå¯¹è±¡
+					createNewitem();// ´´½¨ĞÂµÄÍ¼ĞÎµÄ»ù±¾µ¥Ôª¶ÔÏó
 				}
 			}
 		}
 	}
 
-	// é¼ æ ‡äº‹ä»¶MouseBç»§æ‰¿äº†MouseMotionAdapterï¼Œç”¨æ¥å¤„ç†é¼ æ ‡çš„æ»šåŠ¨ä¸æ‹–åŠ¨
+	// Êó±êÊÂ¼şMouseB¼Ì³ĞÁËMouseMotionAdapter£¬ÓÃÀ´´¦ÀíÊó±êµÄ¹ö¶¯ÓëÍÏ¶¯
 	class MouseB extends MouseMotionAdapter {
-		public void mouseDragged(MouseEvent me)// é¼ æ ‡çš„æ‹–åŠ¨
+		public void mouseDragged(MouseEvent me)// Êó±êµÄÍÏ¶¯
 		{
-			drawpad.setStratBar("é¼ æ ‡æ‹–åŠ¨åœ¨ï¼š[" + me.getX() + " ," + me.getY() + "]");
-			if (chosenStatus == 3) {// ä»»æ„çº¿çš„ç”»æ³•
+			drawpad.setStratBar("Êó±êÍÏ¶¯ÔÚ£º[" + me.getX() + " ," + me.getY() + "]");
+			if (chosenStatus == 3) {// ÈÎÒâÏßµÄ»­·¨
 				itemList[index - 1].x1 = itemList[index].x2 = itemList[index].x1 = me.getX();
 				itemList[index - 1].y1 = itemList[index].y2 = itemList[index].y1 = me.getY();
 				index++;
-				createNewitem();// åˆ›å»ºæ–°çš„å›¾å½¢çš„åŸºæœ¬å•å…ƒå¯¹è±¡
+				createNewitem();// ´´½¨ĞÂµÄÍ¼ĞÎµÄ»ù±¾µ¥Ôª¶ÔÏó
 				repaint();
-			} else if (chosenStatus == 2) {// ä»»æ„çº¿çš„ç”»æ³•
+			} else if (chosenStatus == 2) {// ÈÎÒâÏßµÄ»­·¨
 				itemList[index - 1].x1 = itemList[index].x2 = itemList[index].x1 = me.getX();
 				itemList[index - 1].y1 = itemList[index].y2 = itemList[index].y1 = me.getY();
 				index++;
-				createNewitem();// åˆ›å»ºæ–°çš„å›¾å½¢çš„åŸºæœ¬å•å…ƒå¯¹è±¡
+				createNewitem();// ´´½¨ĞÂµÄÍ¼ĞÎµÄ»ù±¾µ¥Ôª¶ÔÏó
 				repaint();
 			} else if (chosenStatus == 16) {
-				if (chooseni >= 0) {// ç§»åŠ¨çš„è¿‡ç¨‹
+				if (chooseni >= 0) {// ÒÆ¶¯µÄ¹ı³Ì
 					itemList[chooseni].x1 = itemList[chooseni].x1 + me.getX() - x0;
 					itemList[chooseni].y1 = itemList[chooseni].y1 + me.getY() - y0;
 					itemList[chooseni].x2 = itemList[chooseni].x2 + me.getX() - x0;
@@ -412,13 +412,13 @@ public class DrawArea extends JPanel {
 					y0 = me.getY();
 					repaint();
 				}
-			} else if (chosenStatus == 17) {// æ”¾å¤§ç¼©å°çš„è¿‡ç¨‹
+			} else if (chosenStatus == 17) {// ·Å´óËõĞ¡µÄ¹ı³Ì
 				if (chooseni >= 0) {
 					itemList[chooseni].x2 = me.getX();
 					itemList[chooseni].y2 = me.getY();
 					repaint();
 				}
-			} else if (chosenStatus >= 2 && chosenStatus <= 12) {// ç»˜åˆ¶å›¾å½¢çš„è¿‡ç¨‹
+			} else if (chosenStatus >= 2 && chosenStatus <= 12) {// »æÖÆÍ¼ĞÎµÄ¹ı³Ì
 				itemList[index].x2 = me.getX();
 				itemList[index].y2 = me.getY();
 				repaint();
@@ -426,17 +426,17 @@ public class DrawArea extends JPanel {
 			// repaint();
 		}
 
-		public void mouseMoved(MouseEvent me)// é¼ æ ‡çš„ç§»åŠ¨
+		public void mouseMoved(MouseEvent me)// Êó±êµÄÒÆ¶¯
 		{
-			drawpad.setStratBar("é¼ æ ‡ç§»åŠ¨åœ¨ï¼š[" + me.getX() + " ," + me.getY() + "]");
+			drawpad.setStratBar("Êó±êÒÆ¶¯ÔÚ£º[" + me.getX() + " ," + me.getY() + "]");
 			for (chooseni = index - 1; chooseni >= 0; chooseni--) {
-				// ä»ååˆ°å‰å¯»æ‰¾å½“å‰é¼ æ ‡æ˜¯å¦åœ¨æŸä¸ªå›¾å½¢å†…éƒ¨
+				// ´Óºóµ½Ç°Ñ°ÕÒµ±Ç°Êó±êÊÇ·ñÔÚÄ³¸öÍ¼ĞÎÄÚ²¿
 				if (itemList[chooseni].in(me.getX(), me.getY())) {
-					break;// å…¶å®ƒæ“ä½œåªéœ€æ‰¾åˆ°currentiå³å¯
+					break;// ÆäËü²Ù×÷Ö»ĞèÕÒµ½currenti¼´¿É
 				}
 			}
-			if (chooseni >= 0) {// æœ‰å›¾å½¢è¢«é€‰ä¸­
-				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));// æ›´æ”¹é¼ æ ‡æ ·å¼ä¸ºç®­å¤´
+			if (chooseni >= 0) {// ÓĞÍ¼ĞÎ±»Ñ¡ÖĞ
+				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));// ¸ü¸ÄÊó±êÑùÊ½Îª¼ıÍ·
 			} else {
 				setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 			}

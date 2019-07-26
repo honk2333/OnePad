@@ -69,6 +69,7 @@ public class FileClass {
             }
 
         }
+        return;
     }
 
     //保存图像文件程序段，用到文件对（FileOupputSream）象流
