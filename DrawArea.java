@@ -197,11 +197,7 @@ public class DrawArea extends JPanel {
 
 	}
 
-<<<<<<< HEAD:src/DrawArea.java
 	public void chooseStroke(int num)// 画笔粗细的改变,与重名的函数构成重载
-=======
-	public void setStroke(int num)// 画笔粗细的改变,与重名的函数构成重载
->>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawArea.java
 	{
 		String input;
 		input = JOptionPane.showInputDialog("请输入画笔的粗细( >0 )");
@@ -213,17 +209,10 @@ public class DrawArea extends JPanel {
 
 		}
 		itemList[num].stroke = stroke;
-<<<<<<< HEAD:src/DrawArea.java
 
 	}
 
 	public void chooseText(int num) {// 修改已有文字
-=======
-
-	}
-
-	public void setText(int num) {// 修改已有文字
->>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawArea.java
 		String input;
 		input = JOptionPane.showInputDialog("请输入你要写入的文字");
 		tarea.setText(input);
@@ -234,11 +223,7 @@ public class DrawArea extends JPanel {
 		itemList[num].R = R;
 		itemList[num].G = G;
 		itemList[num].B = B;
-<<<<<<< HEAD:src/DrawArea.java
 
-=======
-		
->>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawArea.java
 	}
 
 	public void fillColor(Drawing nowdrawing) {// 填充
@@ -292,17 +277,10 @@ public class DrawArea extends JPanel {
 						chooseColor(pos);
 						repaint();
 					} else if (chosenStatus == 21) { // 改变已有图形的线型
-<<<<<<< HEAD:src/DrawArea.java
 						chooseStroke(pos);
 						repaint();
 					} else if (chosenStatus == 22) {// 改变已有文字
 						chooseText(pos);
-=======
-						setStroke();
-						repaint();
-					} else if (chosenStatus == 22) {// 改变已有文字
-						setText(pos);
->>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawArea.java
 						repaint();
 					}
 				}
@@ -361,11 +339,7 @@ public class DrawArea extends JPanel {
 				} else if (chosenStatus == 5) { // 文本框绘制结束
 					tarea.setBounds(Math.min(tx, me.getX()) + 130, Math.min(ty, me.getY()), Math.abs(tx - me.getX()),
 							Math.abs(ty - me.getY()));// 绘制文本框
-<<<<<<< HEAD:src/DrawArea.java
 					chooseText(index);
-=======
-					setText(index);
->>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawArea.java
 					itemList[index].x2 = me.getX();
 					itemList[index].y2 = me.getY();
 					index++;
