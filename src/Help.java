@@ -11,11 +11,11 @@ public class Help extends JFrame {
     }
 
     public void MainHelp() {
-        JOptionPane.showMessageDialog(this, "Draw_pad帮助文档", "Draw_pad", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "OnePad帮助文档", "OnePad", JOptionPane.WARNING_MESSAGE);
     }
 
     public void AboutBook() {
-        JOptionPane.showMessageDialog(drawpad, "Draw_pad" + "\n" + "版本: 1.0" + "\n"
+        JOptionPane.showMessageDialog(drawpad, "OnePad" + "\n" + "版本: 1.0" + "\n"
                 + "作者:    " + "\n"
                 + "      王洪科 " + "\n"
         		+ "      刘炯驿" + "\n"

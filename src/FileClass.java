@@ -15,17 +15,17 @@ public class FileClass {
     }
 
     public void newFile() {
-        // TODO 新建图像
+        //新建图像
         drawarea.setIndex(0);
         drawarea.setChosenStatus(3);//设置默认为随笔画
         drawarea.setColor(Color.black);//设置颜色
-        drawarea.setStroke(1.0f);//设置画笔的粗细
+        drawarea.setStroke(3.0f);//设置画笔的粗细
         drawarea.createNewitem();
         drawarea.repaint();
     }
 
     public void openFile() {
-        // TODO 打开图像
+        //打开图像
 
         //JFileChooser 为用户选择文件提供了一种简单的机制
         JFileChooser filechooser = new JFileChooser();
@@ -74,7 +74,7 @@ public class FileClass {
 
     //保存图像文件程序段，用到文件对（FileOupputSream）象流
     public void saveFile() {
-        // TODO 保存图像
+        //保存图像
 
         //JFileChooser 为用户选择文件提供了一种简单的机制
         JFileChooser filechooser = new JFileChooser();

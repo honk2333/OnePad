@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -16,29 +17,36 @@ import javax.swing.*;
 
 //主界面类
 public class DrawPad extends JFrame implements ActionListener {
-
-	// private static final long serialVersionUID = -2551980583852173918L;
-
-	//标签页部分-------------------------------------------------------------------------------------------------------------------------------------------
+	// 标签页部分-------------------------------------------------------------------------------------------------------------------------------------------
 	JToolBar Labelpanel;
 	String Labelfilename[];
 	Icon LabelIcons[];
 	String Labeltiptext[];
 	JButton Labelbutton[];
-	
+
 	// 工具按钮部分------------------------------------------------------------------------------------------------------------------------------------------
 	JToolBar buttonpanel;// 定义按钮面板
-	String names[] = { "newfile", "openfile", "savefile", "pen", "line", "word", "stroke", "delete", "fill" ,"eraser"};// 定义工具栏图标的名称
+<<<<<<< HEAD:src/DrawPad.java
+	String names[] = { "newfile", "openfile", "savefile", "pen", "eraser", "stroke", "word", "line", "linestroke",
+			"undo", "redo" };// 定义工具栏图标的名称
 	Icon icons[];// 定义按钮图标数组
 	String tiptext[] = { // 这里是鼠标移到相应的按钮上给出相应的提示
-			"新建一个图片", "打开图片", "保存图片", "随笔画", "画直线", "文字的输入", "选择线条的粗细", "删除一个图形", "填充图形" ,"橡皮擦"};
+			"新建一个图片", "打开图片", "保存图片", "随笔画", "橡皮擦", "选择线条的粗细", "文字的输入", "画直线", "更改线型", "撤销", "恢复" };
+=======
+	String names[] = { "newfile", "openfile", "savefile", "pen", "eraser", "word", "line", "stroke", "undo", "redo" };// 定义工具栏图标的名称
+	Icon icons[];// 定义按钮图标数组
+	String tiptext[] = { // 这里是鼠标移到相应的按钮上给出相应的提示
+			"新建一个图片", "打开图片", "保存图片", "随笔画", "橡皮擦", "文字的输入", "画直线", "选择线条的粗细", "撤销", "恢复" };
+>>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawPad.java
 	JButton button[];// 定义工具条中的按钮组
 
 	// 图形部分------------------------------------------------------------------------------------------------------------------------------------------
 	JToolBar graphpanel;
 	Icon graphIcons[];
-	String graphtext[] = { "画空心的矩形", "填充矩形", "画空心的椭圆", "填充椭圆", "画空心的圆", "填充圆", "画圆角矩形", "填充圆角矩形", "移动图形" };
-	String graphnames[] = { "rect", "frect", "oval", "foval", "circle", "fcircle", "roundrect", "froundrect", "move" };
+	String graphtext[] = { "画空心的矩形", "填充矩形", "画空心的椭圆", "填充椭圆", "画空心的圆", "填充圆", "画圆角矩形", "填充圆角矩形", "移动图形", "删除一个图形",
+			"填充图形", "改变大小", "改变颜色" };
+	String graphnames[] = { "rect", "frect", "oval", "foval", "circle", "fcircle", "roundrect", "froundrect", "move",
+			"delete", "fill", "resize", "recolor" };
 	JButton graphbutton[];
 
 	// 字体部分----------------------------------------------------------------------------------------------------------------------------------------------
@@ -63,24 +71,23 @@ public class DrawPad extends JFrame implements ActionListener {
 	Icon nf, sf, of;// 文件菜单项的图标对象
 	Help helpobject; // 定义一个帮助类对象
 
-	// 状态栏部分--------------------------------------------------------------------------------------------------------------------------------------------
-	JLabel startbar;// 状态栏
-
 	DrawPad(String string) {
 		super(string);
-		
-		//标签页部分-------------------------------------------------------------------------------------------------------------------------------------------
-	    Labelpanel =new JToolBar(JToolBar.HORIZONTAL);
-	    Labelpanel.setLayout(new GridLayout(1,0,0,0));
+
+		// 标签页部分-------------------------------------------------------------------------------------------------------------------------------------------
+		Labelpanel = new JToolBar(JToolBar.HORIZONTAL);
+		Labelpanel.setLayout(new GridLayout(1, 0, 0, 0));
 		Labelpanel.setFloatable(false);
-		
-		//button[0]=
-		
-		
+
+<<<<<<< HEAD:src/DrawPad.java
+=======
+		// button[0]=
+
+>>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawPad.java
 		// 工具按钮部分------------------------------------------------------------------------------------------------------------------------------------------
 		// 工具栏的初始化
 		buttonpanel = new JToolBar(JToolBar.HORIZONTAL);// 设置水平方向排列
-		buttonpanel.setLayout(new GridLayout(0, 3, 0, 0));// 设置布局
+		buttonpanel.setLayout(new GridLayout(1, 0, 0, 0));// 设置布局
 		buttonpanel.setFloatable(false);// 不可浮动
 
 		icons = new ImageIcon[names.length];// 初始化工具栏中的图标
@@ -117,13 +124,7 @@ public class DrawPad extends JFrame implements ActionListener {
 		stroke = new JMenu("画笔");
 		help = new JMenu("帮助");
 
-		// 菜单中添加快捷键
-		file.setMnemonic('F');
-		edit.setMnemonic('E');
-		background.setMnemonic('B');
-		color.setMnemonic('C');
-		stroke.setMnemonic('S');
-		help.setMnemonic('H');
+		// 界面添加菜单条
 		bar = new JMenuBar();
 		bar.add(file);
 		bar.add(edit);
@@ -131,9 +132,15 @@ public class DrawPad extends JFrame implements ActionListener {
 		bar.add(color);
 		bar.add(stroke);
 		bar.add(help);
-
-		// 界面添加菜单条
 		setJMenuBar(bar);
+
+		// 菜单中添加快捷键
+		file.setMnemonic('F');
+		edit.setMnemonic('E');
+		background.setMnemonic('B');
+		color.setMnemonic('C');
+		stroke.setMnemonic('S');
+		help.setMnemonic('H');
 
 		// File
 		nf = new ImageIcon("images/newfile.png");// 创建图标
@@ -227,14 +234,15 @@ public class DrawPad extends JFrame implements ActionListener {
 		fontpanel.add(plain);
 		fontpanel.add(styles);
 
-		// 状态栏部分--------------------------------------------------------------------------------------------------------------------------------------------
-		startbar = new JLabel("OnePad");
-
 		// 调色部分----------------------------------------------------------------------------------------------------------------------------------------------
 		Icon cicon = new ImageIcon("images/color.png");
 		cbutton = new JButton("", cicon);
 		cbutton.setToolTipText("自定义颜色");
-		cbutton.addActionListener(e -> drawarea.chooseColor());
+<<<<<<< HEAD:src/DrawPad.java
+		cbutton.addActionListener(this);
+=======
+		// cbutton.addActionListener(e -> drawarea.chooseColor());
+>>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawPad.java
 
 		colorButton = new JButton[20];//
 		JToolBar colorButtonPanel = new JToolBar(JToolBar.VERTICAL);//
@@ -267,7 +275,7 @@ public class DrawPad extends JFrame implements ActionListener {
 		colorButton[19].setBackground(new Color(0x9c4ca1));
 		for (int i = 0; i < 20; i++) {// 给颜色按钮添加事件
 			int finalI = i;
-			colorButton[i].addActionListener(e -> drawarea.colorBar(colorButton[finalI].getBackground().getRed(),
+			colorButton[i].addActionListener(e -> drawarea.setRGB(colorButton[finalI].getBackground().getRed(),
 					colorButton[finalI].getBackground().getGreen(), colorButton[finalI].getBackground().getBlue()));
 		}
 
@@ -283,17 +291,15 @@ public class DrawPad extends JFrame implements ActionListener {
 		Dimension dim = tool.getScreenSize();//
 		con.setLayout(null);
 
-		buttonpanel.setBounds(1550, 0, 350, 280);//
-		graphpanel.setBounds(1550, 290, 350, 280);
-		startbar.setBounds(dim.width - 300, dim.height - 150, 300, 100);
-		drawarea.setBounds(20, 75, dim.width - 400, dim.height - 200);
-		colorButtonPanel.setBounds(dim.width - 350, dim.height - 400, 300, 300);
-		fontpanel.setBounds(dim.width - 350, 450, 300, 75);
-		cbutton.setBounds(dim.width - 350, dim.height - 500, 300, 100);
+		buttonpanel.setBounds(30, 10, 1500, 80);//
+		graphpanel.setBounds(1550, 10, 350, 280);
+		drawarea.setBounds(20, 100, dim.width - 400, dim.height - 200);
+		colorButtonPanel.setBounds(dim.width - 350, dim.height - 500, 300, 300);
+		fontpanel.setBounds(dim.width - 350, 350, 300, 75);
+		cbutton.setBounds(dim.width - 350, dim.height - 600, 300, 100);
 		con.add(buttonpanel);//
 		con.add(graphpanel);
 		con.add(drawarea);
-		con.add(startbar);
 		con.add(colorButtonPanel);
 		con.add(fontpanel);
 		con.add(cbutton);
@@ -304,69 +310,145 @@ public class DrawPad extends JFrame implements ActionListener {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
-	//
-	void setStratBar(String s) {
-		startbar.setText(s);
-	}
-
-
-	//
+	// 当按下按钮时,将按钮对应的编号传给画板类处理
 	public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==button[9]) {
-        	drawarea.setChosenStatus(2);
-			drawarea.createNewitem();
-			drawarea.repaint();
-        }
-		for (int i = 3; i <= 4; i++) {
+
+		// 按钮组件编号设置
+		if (e.getSource() == newfile || e.getSource() == button[0]) {
+			fileclass.newFile();
+		}
+		if (e.getSource() == openfile || e.getSource() == button[1]) {
+			fileclass.openFile();
+		}
+		if (e.getSource() == savefile || e.getSource() == button[2]) {
+			fileclass.saveFile();
+		}
+		int cnt = 3;
+<<<<<<< HEAD:src/DrawPad.java
+		for (int i = 3; i <= 4; i++) { // 画图形相关
 			if (e.getSource() == button[i]) {
-				drawarea.setChosenStatus(i);
+				drawarea.setChosenStatus(cnt);
+=======
+		for (int i = 3; i <= 6; i++) { // 画图形相关
+			if (e.getSource() == button[i]) {
+				drawarea.setChosenStatus(cnt);
 				drawarea.createNewitem();
 				drawarea.repaint();
 			}
+			cnt++;
 		}
-		for (int i = 0; i <= 7; i++) {//
+		if (e.getSource() == button[7] || e.getSource() == strokeitem) { // 设置粗细相关
+			drawarea.setChosenStatus(cnt);
+		}
+		cnt++;
+		for (int i = 0; i < graphbutton.length - 5; i++) { // 画图形相关
 			if (e.getSource() == graphbutton[i]) {
-				drawarea.setChosenStatus(i+5);
+				drawarea.setChosenStatus(cnt);
+>>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawPad.java
 				drawarea.createNewitem();
 				drawarea.repaint();
 			}
+			cnt++;
+<<<<<<< HEAD:src/DrawPad.java
 		}
-		if (e.getSource() == button[5]) {
-			drawarea.setChosenStatus(13);
-			drawarea.createNewitem();
+		for (int i = 6; i <= 7; i++) {
+			if (e.getSource() == button[i]) {
+				drawarea.setChosenStatus(cnt);
+				drawarea.createNewitem();
+				drawarea.repaint();
+			}
+			cnt++;
+		}
+		if (e.getSource() == button[5] || e.getSource() == strokeitem) { // 设置粗细相关
+			drawarea.chooseStroke();
+		}
+		cnt++;
+		for (int i = 0; i < graphbutton.length - 5; i++) { // 画图形相关
+=======
+		}
+		// 图形修改部分编号16-20
+		for (int i = graphbutton.length - 5; i < graphbutton.length - 1; i++) {
+>>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawPad.java
+			if (e.getSource() == graphbutton[i]) {
+				drawarea.setChosenStatus(cnt);
+				drawarea.createNewitem();
+				drawarea.repaint();
+			}
+			cnt++;
+<<<<<<< HEAD:src/DrawPad.java
+		}
+		// 图形修改部分编号16-20
+		for (int i = graphbutton.length - 5; i < graphbutton.length - 1; i++) {
+			if (e.getSource() == graphbutton[i]) {
+				drawarea.setChosenStatus(cnt);
+			}
+			cnt++;
+		}
+		// 更改图形颜色20
+		if (e.getSource() == graphbutton[graphbutton.length - 1] || e.getSource() == editcolor) {
+			drawarea.setChosenStatus(cnt);
+		}
+		cnt++;
+		// 更改线型21
+		if (e.getSource() == button[8] || e.getSource() == editstroke) {
+			drawarea.setChosenStatus(cnt);
+		}
+		cnt++;
+		// 更改文本框22
+		if (e.getSource() == edittext) {
+			drawarea.setChosenStatus(cnt);//
+		}
+		cnt++;
+		// 撤销和恢复
+		if (e.getSource() == button[9]) {
+=======
+		}
+		// 更改图形颜色20
+		if (e.getSource() == graphbutton[graphbutton.length - 1] || e.getSource() == editcolor) {
+			drawarea.setChosenStatus(cnt);
+		}
+		cnt++;
+		// 更改线型21
+		if (e.getSource() == editstroke) {
+			drawarea.setChosenStatus(cnt);
+		}
+		cnt++;
+		// 更改文本框22
+		if (e.getSource() == edittext) {
+			drawarea.setChosenStatus(cnt);//
+		}
+		cnt++;
+		// 撤销和恢复
+		if (e.getSource() == button[8]) {
+>>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawPad.java
+			drawarea.setChosenStatus(cnt);
+			drawarea.setIndex(drawarea.getIndex() - 1);
 			drawarea.repaint();
 		}
-		if (e.getSource() == button[6] || e.getSource() == strokeitem) {
-			drawarea.setStroke();//
-		} else if (e.getSource() == button[7]) {
-			drawarea.setChosenStatus(15);//
-		} else if (e.getSource() == graphbutton[8]) {
-			drawarea.setChosenStatus(16);//
-		} else if (e.getSource() == editgraph) {
-			drawarea.setChosenStatus(17);//
-		} else if (e.getSource() == editcolor) {
-			drawarea.setChosenStatus(18);//
-		} else if (e.getSource() == editstroke) {
-			drawarea.setChosenStatus(19);//
-		} else if (e.getSource() == button[8]) {
-			drawarea.setChosenStatus(20);//
-		} else if (e.getSource() == edittext) {
-			drawarea.setChosenStatus(21);//
-		} else if (e.getSource() == newfile || e.getSource() == button[0]) {
-			fileclass.newFile();//
-		} else if (e.getSource() == openfile || e.getSource() == button[1]) {
-			fileclass.openFile();//
-		} else if (e.getSource() == savefile || e.getSource() == button[2]) {
-			fileclass.saveFile();//
-		} else if (e.getSource() == exit) {
-			System.exit(0);//
-		} else if (e.getSource() == colorchoice) {
-			drawarea.chooseColor();//
-		} else if (e.getSource() == helpin) {
-			helpobject.AboutBook();//
-		} else if (e.getSource() == helpmain) {
-			helpobject.MainHelp();// 
+		cnt++;
+<<<<<<< HEAD:src/DrawPad.java
+		if (e.getSource() == button[10]) {
+=======
+		if (e.getSource() == button[9]) {
+>>>>>>> b624ab5d5faccde44392e11a4fcc3532e314a2fb:src/DrawPad.java
+			drawarea.setChosenStatus(cnt);
+			drawarea.setIndex(drawarea.getIndex() + 1);
+			drawarea.repaint();
 		}
+		cnt++;
+		if (e.getSource() == exit) {
+			System.exit(0);
+		}
+		if (e.getSource() == cbutton || e.getSource() == colorchoice) {
+			drawarea.chooseColor();
+		}
+		if (e.getSource() == helpin) {
+			helpobject.AboutBook();
+		}
+		if (e.getSource() == helpmain) {
+			helpobject.MainHelp();
+		}
+
 	}
 
 	// 字体样式处理类（粗体、斜体、字体名称）
