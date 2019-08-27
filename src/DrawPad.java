@@ -26,10 +26,11 @@ public class DrawPad extends JFrame implements ActionListener {
 
 	// 工具按钮部分------------------------------------------------------------------------------------------------------------------------------------------
 	JToolBar buttonpanel;// 定义按钮面板
-	String names[] = { "newfile", "openfile", "savefile", "pen", "eraser", "word", "line", "stroke", "undo", "redo" };// 定义工具栏图标的名称
+	String names[] = { "newfile", "openfile", "savefile", "pen", "eraser", "stroke", "word", "line", "linestroke",
+			"undo", "redo" };// 定义工具栏图标的名称
 	Icon icons[];// 定义按钮图标数组
 	String tiptext[] = { // 这里是鼠标移到相应的按钮上给出相应的提示
-			"新建一个图片", "打开图片", "保存图片", "随笔画", "橡皮擦", "文字的输入", "画直线", "选择线条的粗细", "撤销", "恢复" };
+			"新建一个图片", "打开图片", "保存图片", "随笔画", "橡皮擦", "选择线条的粗细", "文字的输入", "画直线", "更改线型", "撤销", "恢复" };
 	JButton button[];// 定义工具条中的按钮组
 
 	// 图形部分------------------------------------------------------------------------------------------------------------------------------------------
@@ -70,8 +71,6 @@ public class DrawPad extends JFrame implements ActionListener {
 		Labelpanel = new JToolBar(JToolBar.HORIZONTAL);
 		Labelpanel.setLayout(new GridLayout(1, 0, 0, 0));
 		Labelpanel.setFloatable(false);
-
-		// button[0]=
 
 		// 工具按钮部分------------------------------------------------------------------------------------------------------------------------------------------
 		// 工具栏的初始化
@@ -227,7 +226,7 @@ public class DrawPad extends JFrame implements ActionListener {
 		Icon cicon = new ImageIcon("images/color.png");
 		cbutton = new JButton("", cicon);
 		cbutton.setToolTipText("自定义颜色");
-		// cbutton.addActionListener(e -> drawarea.chooseColor());
+		cbutton.addActionListener(this);
 
 		colorButton = new JButton[20];//
 		JToolBar colorButtonPanel = new JToolBar(JToolBar.VERTICAL);//
@@ -309,7 +308,7 @@ public class DrawPad extends JFrame implements ActionListener {
 			fileclass.saveFile();
 		}
 		int cnt = 3;
-		for (int i = 3; i <= 6; i++) { // 画图形相关
+		for (int i = 3; i <= 4; i++) { // 画图形相关
 			if (e.getSource() == button[i]) {
 				drawarea.setChosenStatus(cnt);
 				drawarea.createNewitem();
@@ -317,8 +316,16 @@ public class DrawPad extends JFrame implements ActionListener {
 			}
 			cnt++;
 		}
-		if (e.getSource() == button[7] || e.getSource() == strokeitem) { // 设置粗细相关
-			drawarea.setChosenStatus(cnt);
+		for (int i = 6; i <= 7; i++) {
+			if (e.getSource() == button[i]) {
+				drawarea.setChosenStatus(cnt);
+				drawarea.createNewitem();
+				drawarea.repaint();
+			}
+			cnt++;
+		}
+		if (e.getSource() == button[5] || e.getSource() == strokeitem) { // 设置粗细相关
+			drawarea.chooseStroke();
 		}
 		cnt++;
 		for (int i = 0; i < graphbutton.length - 5; i++) { // 画图形相关
@@ -333,8 +340,6 @@ public class DrawPad extends JFrame implements ActionListener {
 		for (int i = graphbutton.length - 5; i < graphbutton.length - 1; i++) {
 			if (e.getSource() == graphbutton[i]) {
 				drawarea.setChosenStatus(cnt);
-				drawarea.createNewitem();
-				drawarea.repaint();
 			}
 			cnt++;
 		}
@@ -344,7 +349,7 @@ public class DrawPad extends JFrame implements ActionListener {
 		}
 		cnt++;
 		// 更改线型21
-		if (e.getSource() == editstroke) {
+		if (e.getSource() == button[8] || e.getSource() == editstroke) {
 			drawarea.setChosenStatus(cnt);
 		}
 		cnt++;
@@ -354,13 +359,13 @@ public class DrawPad extends JFrame implements ActionListener {
 		}
 		cnt++;
 		// 撤销和恢复
-		if (e.getSource() == button[8]) {
+		if (e.getSource() == button[9]) {
 			drawarea.setChosenStatus(cnt);
 			drawarea.setIndex(drawarea.getIndex() - 1);
 			drawarea.repaint();
 		}
 		cnt++;
-		if (e.getSource() == button[9]) {
+		if (e.getSource() == button[10]) {
 			drawarea.setChosenStatus(cnt);
 			drawarea.setIndex(drawarea.getIndex() + 1);
 			drawarea.repaint();

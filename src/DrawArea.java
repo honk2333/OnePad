@@ -182,7 +182,7 @@ public class DrawArea extends JPanel {
 		itemList[num].B = B;
 	}
 
-	public void setStroke()// 画笔粗细的调整
+	public void chooseStroke()// 画笔粗细的调整
 	{
 		String input;
 		input = JOptionPane.showInputDialog("请输入画笔的粗细( >0 )");
@@ -197,7 +197,7 @@ public class DrawArea extends JPanel {
 
 	}
 
-	public void setStroke(int num)// 画笔粗细的改变,与重名的函数构成重载
+	public void chooseStroke(int num)// 画笔粗细的改变,与重名的函数构成重载
 	{
 		String input;
 		input = JOptionPane.showInputDialog("请输入画笔的粗细( >0 )");
@@ -212,7 +212,7 @@ public class DrawArea extends JPanel {
 
 	}
 
-	public void setText(int num) {// 修改已有文字
+	public void chooseText(int num) {// 修改已有文字
 		String input;
 		input = JOptionPane.showInputDialog("请输入你要写入的文字");
 		tarea.setText(input);
@@ -223,7 +223,7 @@ public class DrawArea extends JPanel {
 		itemList[num].R = R;
 		itemList[num].G = G;
 		itemList[num].B = B;
-		
+
 	}
 
 	public void fillColor(Drawing nowdrawing) {// 填充
@@ -277,10 +277,10 @@ public class DrawArea extends JPanel {
 						chooseColor(pos);
 						repaint();
 					} else if (chosenStatus == 21) { // 改变已有图形的线型
-						setStroke();
+						chooseStroke(pos);
 						repaint();
 					} else if (chosenStatus == 22) {// 改变已有文字
-						setText(pos);
+						chooseText(pos);
 						repaint();
 					}
 				}
@@ -339,7 +339,7 @@ public class DrawArea extends JPanel {
 				} else if (chosenStatus == 5) { // 文本框绘制结束
 					tarea.setBounds(Math.min(tx, me.getX()) + 130, Math.min(ty, me.getY()), Math.abs(tx - me.getX()),
 							Math.abs(ty - me.getY()));// 绘制文本框
-					setText(index);
+					chooseText(index);
 					itemList[index].x2 = me.getX();
 					itemList[index].y2 = me.getY();
 					index++;
