@@ -84,7 +84,7 @@ public class Welcome extends JFrame implements ActionListener {
 		} else if (e.getSource() == button[1]) {
 			drawpad = new DrawPad("Onepad");
 			fileclass = new FileClass(drawpad, drawpad.drawarea);
-			fileclass.openFile();//
+			fileclass.openFile();
 			drawpad.setVisible(true);
 			WelFrame.setVisible(false);
 		} else if (e.getSource() == button[2]) {

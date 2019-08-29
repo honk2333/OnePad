@@ -31,7 +31,7 @@ public abstract class Drawing implements Serializable {
 class Line extends Drawing// 直线类
 {
 	int gettype() {
-		type = 6;
+		type = 4;
 		return type;
 	}
 
@@ -64,7 +64,7 @@ class Line extends Drawing// 直线类
 
 class Rect extends Drawing {// 矩形类
 	int gettype() {
-		type = 8;
+		type = 5;
 		return type;
 	}
 
@@ -85,7 +85,7 @@ class Rect extends Drawing {// 矩形类
 
 class fillRect extends Drawing {// 实心矩形类
 	int gettype() {
-		type = 9;
+		type = 6;
 		return type;
 	}
 
@@ -107,7 +107,7 @@ class fillRect extends Drawing {// 实心矩形类
 class Oval extends Drawing {// 椭圆类
 
 	int gettype() {
-		type = 10;
+		type = 7;
 		return type;
 	}
 
@@ -132,7 +132,7 @@ class Oval extends Drawing {// 椭圆类
 class fillOval extends Drawing {// 实心椭圆类
 
 	int gettype() {
-		type = 11;
+		type = 8;
 		return type;
 	}
 
@@ -157,7 +157,7 @@ class fillOval extends Drawing {// 实心椭圆类
 class Circle extends Drawing {// 圆形类
 
 	int gettype() {
-		type = 12;
+		type = 9;
 		return type;
 	}
 
@@ -184,7 +184,7 @@ class Circle extends Drawing {// 圆形类
 
 class fillCircle extends Drawing {// 实心圆类
 	int gettype() {
-		type = 13;
+		type = 10;
 		return type;
 	}
 
@@ -210,7 +210,7 @@ class fillCircle extends Drawing {// 实心圆类
 
 class RoundRect extends Drawing {// 圆角矩形类
 	int gettype() {
-		type = 14;
+		type = 11;
 		return type;
 	}
 
@@ -231,7 +231,7 @@ class RoundRect extends Drawing {// 圆角矩形类
 
 class fillRoundRect extends Drawing {// 实心圆角矩形类
 	int gettype() {
-		type = 15;
+		type = 12;
 		return type;
 	}
 
@@ -252,7 +252,7 @@ class fillRoundRect extends Drawing {// 实心圆角矩形类
 
 class Pencil extends Drawing {// 随笔画类
 	int gettype() {
-		type = 3;
+		type = 1;
 		return type;
 	}
 
@@ -264,9 +264,9 @@ class Pencil extends Drawing {// 随笔画类
 	// in函数继承返回false，即随笔画不能被选中
 }
 
-class Eraser extends Drawing {//// 随笔画类
+class Eraser extends Drawing { // 橡皮擦类
 	int gettype() {
-		type = 4;
+		type = 2;
 		return type;
 	}
 
@@ -280,7 +280,7 @@ class Eraser extends Drawing {//// 随笔画类
 
 class Word extends Drawing {// 输入文字类
 	int gettype() {
-		type = 5;
+		type = 3;
 		return type;
 	}
 
