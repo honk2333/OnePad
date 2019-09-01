@@ -52,7 +52,7 @@ public class Graphpad extends JFrame implements ActionListener {
 		int cnt = 5;
 		for (int i = 0; i <= 7; i++) { // 画图形相关
 			if (e.getSource() == graphbutton[i]) {
-				drawarea.setChosenStatus(cnt);
+				drawarea.chosenStatus = cnt;
 				drawarea.createNewitem();
 				drawarea.repaint();
 			}
@@ -63,7 +63,7 @@ public class Graphpad extends JFrame implements ActionListener {
 		cnt = 23;
 		for (int i = 8; i < graphbutton.length; i++) { // 移动图形23,删除一个图形24,填充图形25, 改变大小26, 改变颜色27
 			if (e.getSource() == graphbutton[i]) {
-				drawarea.setChosenStatus(cnt);
+				drawarea.chosenStatus = cnt;
 			}
 			cnt++;
 		}

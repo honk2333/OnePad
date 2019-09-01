@@ -43,7 +43,8 @@ public class Colorpad extends JFrame implements ActionListener {
 		cbutton = new JButton("标准颜色", cicon);
 		cbutton.setToolTipText("自定义颜色");
 		cbutton.addActionListener(this);
-		taken = new JButton("取色器");
+		cicon = new ImageIcon("images/getcolor.png");
+		taken = new JButton("取色器",cicon);
 		taken.setToolTipText("取色器");
 		taken.addActionListener(this);
 		Toolkit tool = getToolkit();
@@ -93,9 +94,9 @@ public class Colorpad extends JFrame implements ActionListener {
 		if (e.getSource() == cbutton) {
 			drawarea.chooseColor();
 		}
-		// 取色编号为28
+		// 取色
 		if (e.getSource() == taken) {
-			drawarea.setChosenStatus(28);
+			dp.catchcoloring = true;
 		}
 	}
 }

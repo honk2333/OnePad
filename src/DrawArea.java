@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
@@ -27,14 +28,13 @@ public class DrawArea extends JPanel {
 	int pos = 0;// 当前选中图形的数组下标
 	int x0, y0;// 记录移动图形鼠标起 始位置
 	int x1, y1;
-	private int chosenStatus = 1;// 设置默认基本图形状态为随笔画
+	int chosenStatus = 1;// 设置默认基本图形状态为随笔画
 	int index = 0;// 当前已经绘制的图形数目
 	Color color = Color.black;// 当前画笔的颜色
-	float stroke = 3.0f;// 设置画笔的粗细 ，默认的是 1.0
+	float stroke = 3.0f;// 设置画笔的粗细 ，默认的是 3.0
 	int R, G, B;// 用来存放当前颜色的彩值
-	int f1, f2;// 用来存放当前字体的风格
-	String style;// 存放当前字体
-
+	int f1, f2; // 用来存放当前字体的风格
+	String style; // 存放当前字体
 	JTextArea tarea = new JTextArea(""); // 文本框
 	int tx, ty;
 
@@ -48,29 +48,6 @@ public class DrawArea extends JPanel {
 		createNewitem();
 	}
 
-	public void setIndex(int x) {// 设置index的接口
-		index = x;
-	}
-
-	public int getIndex() {// 读取index的接口
-		return index;
-	}
-
-	public void setColor(Color color)// 设置颜色的值
-	{
-		this.color = color;
-	}
-
-	public void setStroke(float f)// 设置画笔粗细的接口
-	{
-		stroke = f;
-	}
-
-	public void setChosenStatus(int i)// 设置当前选择（button触发时使用）
-	{
-		chosenStatus = i;
-	}
-
 	public void setRGB(int cR, int cG, int cB) { // 设置当前颜色
 		R = cR;
 		G = cG;
@@ -80,7 +57,7 @@ public class DrawArea extends JPanel {
 		itemList[index].B = B;
 	}
 
-	public void setFont(int i, int font)// 设置字体
+	public void setFont(int i, int font) // 设置字体
 	{
 		if (i == 1) {
 			f1 = font;
@@ -143,7 +120,7 @@ public class DrawArea extends JPanel {
 
 	}
 
-	public void paintComponent(Graphics g) {// repaint()需要调用
+	public void paintComponent(Graphics g) { // repaint()需要调用
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		int j = 0;
@@ -219,18 +196,30 @@ public class DrawArea extends JPanel {
 
 	}
 
+	public void chooseText() { // 创建文字
+		String input;
+		input = JOptionPane.showInputDialog("请输入你要写入的文字");
+		tarea.setText(input);
+		itemList[index].s1 = input;// 重设选中文本框的各参数
+		itemList[index].s2 = style;
+		itemList[index].fontype = f1 + f2;
+		itemList[index].stroke = stroke;
+		itemList[index].R = R;
+		itemList[index].G = G;
+		itemList[index].B = B;
+	}
+
 	public void chooseText(int num) { // 修改已有文字
 		String input;
 		input = JOptionPane.showInputDialog("请输入你要写入的文字");
 		tarea.setText(input);
 		itemList[num].s1 = input;// 重设选中文本框的各参数
 		itemList[num].s2 = style;
-		itemList[num].type = f1 + f2;
+		itemList[num].fontype = f1 + f2;
 		itemList[num].stroke = stroke;
 		itemList[num].R = R;
 		itemList[num].G = G;
 		itemList[num].B = B;
-
 	}
 
 	public void fillColor(Drawing nowdrawing) { // 填充
@@ -268,37 +257,10 @@ public class DrawArea extends JPanel {
 		}
 	}
 
-	public int getPixel(int x, int y) throws AWTException {
-		Robot rb = new Robot(); // 在此用来抓取屏幕，即截屏。详细可见API
-		Toolkit tk = Toolkit.getDefaultToolkit(); // 获取缺省工具包
-		Dimension di = tk.getScreenSize(); // 屏幕尺寸规格
-		Rectangle rec = new Rectangle(0, 0, di.width, di.height);
-		BufferedImage bi = rb.createScreenCapture(rec);
-		int pixelColor = bi.getRGB(x, y);// 获得自定坐标的像素值
-		// pixelColor的值为负，经过实践得出：加上颜色最大值就是实际颜色值。
-		System.out.println(pixelColor);
-		return 16777216 + pixelColor;
-	}
+	
 
 	// 鼠标事件MouseA类继承了MouseAdapter，用来完成鼠标的响应事件的操作
 	class MouseA extends MouseAdapter {
-		public void mouseClicked(MouseEvent me) {
-			if (chosenStatus == 28) {// 取色器
-				try {
-					int pixel = getPixel(me.getX(), me.getY());
-					System.out.println(pixel);
-					R = (pixel & (0xff0000)) / (0x10000);
-					G = pixel & (0x00ff00) / (0x100);
-					B = pixel & (0x0000ff);
-				} catch (AWTException e) {
-					R = 0;
-					G = 0;
-					B = 0;
-				}
-				System.out.println(R + " " + G + " " + B);
-			}
-		}
-
 		public void mousePressed(MouseEvent me) { // 鼠标按下
 			if (chosenStatus >= 21 && chosenStatus <= 27) { // 删除，移动，更改大小，更改颜色，更改线型，填充六种操作都需要选定图形
 				for (pos = index - 1; pos >= 0; pos--) { // 从后到前寻找当前鼠标是否在某个图形内部
@@ -396,7 +358,7 @@ public class DrawArea extends JPanel {
 				} else if (chosenStatus == 3) { // 文本框绘制结束
 					tarea.setBounds(Math.min(tx, me.getX()) + 130, Math.min(ty, me.getY()), Math.abs(tx - me.getX()),
 							Math.abs(ty - me.getY())); // 绘制文本框
-					chooseText(index);
+					chooseText();
 					itemList[index].x2 = me.getX();
 					itemList[index].y2 = me.getY();
 					index++;
@@ -414,7 +376,7 @@ public class DrawArea extends JPanel {
 			}
 		}
 	}
-
+	
 	// 鼠标事件MouseB继承了MouseMotionAdapter，用来处理鼠标的滚动与拖动
 	class MouseB extends MouseMotionAdapter {
 		public void mouseDragged(MouseEvent me) // 鼠标的拖动

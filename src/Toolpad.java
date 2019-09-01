@@ -64,40 +64,40 @@ public class Toolpad extends JFrame implements ActionListener {
 			drawarea.chooseStroke();
 		}
 		if (e.getSource() == button[10]) {// 撤销和恢复
-			drawarea.setIndex(drawarea.getIndex() - 1);
+			drawarea.index = drawarea.index - 1;
 			drawarea.repaint();
 		}
 		if (e.getSource() == button[11]) {
-			drawarea.setIndex(drawarea.getIndex() + 1);
+			drawarea.index = drawarea.index + 1;
 			drawarea.repaint();
 		}
 
 		// 更改图形相关,从21开始编号
 		if (e.getSource() == button[7]) { // 更改文本框21
-			drawarea.setChosenStatus(21);
+			drawarea.chosenStatus=21;
 		}
 		if (e.getSource() == button[9]) { // 更改线型22
-			drawarea.setChosenStatus(22);
+			drawarea.chosenStatus=22;
 		}
 
 		// 添加图形相关,从1开始编号
 		if (e.getSource() == button[3]) { // 随笔画1
-			drawarea.setChosenStatus(1);
+			drawarea.chosenStatus = 1;
 			drawarea.createNewitem();
 			drawarea.repaint();
 		}
 		if (e.getSource() == button[4]) { // 橡皮擦2
-			drawarea.setChosenStatus(2);
+			drawarea.chosenStatus = 2;
 			drawarea.createNewitem();
 			drawarea.repaint();
 		}
 		if (e.getSource() == button[6]) { // 添加文本框3
-			drawarea.setChosenStatus(3);
+			drawarea.chosenStatus = 3;
 			drawarea.createNewitem();
 			drawarea.repaint();
 		}
 		if (e.getSource() == button[8]) { // 添加直线4
-			drawarea.setChosenStatus(4);
+			drawarea.chosenStatus = 4;
 			drawarea.createNewitem();
 			drawarea.repaint();
 		}
