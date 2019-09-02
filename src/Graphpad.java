@@ -43,7 +43,7 @@ public class Graphpad extends JFrame implements ActionListener {
 			graphbutton[i].setBackground(Color.white);
 			graphbutton[i].addActionListener(this);
 		}
-		graphpanel.setBounds(1550, 10, 350, 280);
+		graphpanel.setBounds(1350, 0, 350, 350);
 	}
 
 	// 当按下按钮时,将按钮对应的编号传给画板类处理

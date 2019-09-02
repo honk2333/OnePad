@@ -257,10 +257,43 @@ public class DrawArea extends JPanel {
 		}
 	}
 
-	
+	public int getPixel(int x, int y) throws AWTException {
+		Robot rb = new Robot(); // 在此用来抓取屏幕，即截屏。详细可见API
+		Toolkit tk = Toolkit.getDefaultToolkit(); // 获取缺省工具包
+		Dimension di = tk.getScreenSize(); // 屏幕尺寸规格
+		Rectangle rec = new Rectangle(100, 50 + 80 + 52, 1350, di.height - 300);
+		BufferedImage bi = rb.createScreenCapture(rec);
+		int pixelColor = bi.getRGB(x, y);// 获得自定坐标的像素值
+		// pixelColor的值为负，经过实践得出：加上颜色最大值就是实际颜色值。
+		//System.out.println(pixelColor);
+		return 16777216 + pixelColor;
+		// return rb.getPixelColor(x, y);
+	}
+
+	public void catchcolor(int x, int y) {
+		try {
+			int pixel = getPixel(x, y);
+//			R = pixel.getRed();
+//			G = pixel.getGreen();
+//			B = pixel.getBlue();
+			R = (pixel & 0xff0000) / (0x10000);
+			G = (pixel & 0x00ff00) / (0x100);
+			B = (pixel & 0x0000ff);
+		} catch (AWTException e) {
+			R = 0;
+			G = 0;
+			B = 0;
+		}
+		//System.out.println(R + " " + G + " " + B);
+	}
 
 	// 鼠标事件MouseA类继承了MouseAdapter，用来完成鼠标的响应事件的操作
 	class MouseA extends MouseAdapter {
+		public void mouseClicked(MouseEvent me) {
+			if (chosenStatus == 13)
+				catchcolor(me.getX(), me.getY());
+		}
+
 		public void mousePressed(MouseEvent me) { // 鼠标按下
 			if (chosenStatus >= 21 && chosenStatus <= 27) { // 删除，移动，更改大小，更改颜色，更改线型，填充六种操作都需要选定图形
 				for (pos = index - 1; pos >= 0; pos--) { // 从后到前寻找当前鼠标是否在某个图形内部
@@ -376,7 +409,7 @@ public class DrawArea extends JPanel {
 			}
 		}
 	}
-	
+
 	// 鼠标事件MouseB继承了MouseMotionAdapter，用来处理鼠标的滚动与拖动
 	class MouseB extends MouseMotionAdapter {
 		public void mouseDragged(MouseEvent me) // 鼠标的拖动

@@ -45,7 +45,7 @@ public class Toolpad extends JFrame implements ActionListener {
 			button[i].addActionListener(this);// 关联事件处理程序
 			button[i].setBackground(Color.white);
 		}
-		buttonpanel.setBounds(30, 10, 1500, 80);
+		buttonpanel.setBounds(0, 0, 1350, 80);
 		// buttonpanel.setVisible(true);
 	}
 

@@ -52,7 +52,7 @@ public class Fontpad extends JFrame {
 		styles.setFont(new Font(Font.DIALOG, Font.BOLD, 20));// 设置字体
 		// 添加字体式样栏
 		fontpanel = new JToolBar("字体选项", JToolBar.HORIZONTAL);// 水平方向
-		fontpanel.setLayout(new GridLayout(2, 3, 0, 0));
+		fontpanel.setLayout(new GridLayout(0, 3, 0, 0));
 		fontpanel.setFloatable(false);
 		fontpanel.add(bold);
 		fontpanel.add(italic);
@@ -60,7 +60,7 @@ public class Fontpad extends JFrame {
 		fontpanel.add(styles);
 		Toolkit tool = getToolkit();
 		Dimension dim = tool.getScreenSize();
-		fontpanel.setBounds(dim.width - 350, 350, 300, 75);
+		fontpanel.setBounds(1350, 350, 350, 100);
 	}
 
 	// 字体样式处理类（粗体、斜体、字体名称）

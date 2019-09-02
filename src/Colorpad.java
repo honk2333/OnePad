@@ -44,18 +44,18 @@ public class Colorpad extends JFrame implements ActionListener {
 		cbutton.setToolTipText("自定义颜色");
 		cbutton.addActionListener(this);
 		cicon = new ImageIcon("images/getcolor.png");
-		taken = new JButton("取色器",cicon);
+		taken = new JButton("取色器", cicon);
 		taken.setToolTipText("取色器");
 		taken.addActionListener(this);
 		Toolkit tool = getToolkit();
 		Dimension dim = tool.getScreenSize();
-		cbutton.setBounds(dim.width - 250, dim.height - 600, 200, 100);
-		taken.setBounds(dim.width - 350, dim.height - 600, 100, 100);
+		cbutton.setBounds(1470, 450, 230, 100);
+		taken.setBounds(1350, 450, 120, 100);
 		colorButton = new JButton[20];//
 		colorButtonPanel = new JToolBar(JToolBar.VERTICAL);//
 		colorButtonPanel.setLayout(new GridLayout(0, 5, 0, 0));
 		colorButtonPanel.setFloatable(false);
-		colorButtonPanel.setBounds(dim.width - 350, dim.height - 500, 300, 300);
+		colorButtonPanel.setBounds(1350, 550, 355, 315);
 		for (int i = 0; i < 20; i++) {
 			colorButton[i] = new JButton("");//
 			colorButtonPanel.add(colorButton[i]);
@@ -96,7 +96,7 @@ public class Colorpad extends JFrame implements ActionListener {
 		}
 		// 取色
 		if (e.getSource() == taken) {
-			dp.catchcoloring = true;
+			drawarea.chosenStatus = 13;
 		}
 	}
 }
