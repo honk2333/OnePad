@@ -17,6 +17,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.*;
@@ -81,7 +83,26 @@ public class DrawPad extends JFrame {
 		setVisible(true);
 		validate();
 		setResizable(false); // 禁止改变窗体大小
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (drawarea.saven) {
+					setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+				} else {
+					int selected = JOptionPane.showConfirmDialog(drawarea, "您有更改未保存，是否保存? ", "提示 ",
+							JOptionPane.YES_NO_CANCEL_OPTION);
+					if (JOptionPane.NO_OPTION == selected) {
+						System.exit(0);
+					} else if (JOptionPane.OK_OPTION == selected) {
+						fileclass.saveFile();
+						System.exit(0);
+					} else {
+						setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+					}
+				}
+
+			}
+		});
+
 	}
 
 }

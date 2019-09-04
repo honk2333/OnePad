@@ -124,7 +124,7 @@ public class Menupad extends JFrame implements ActionListener {
 		color.add(colorchoice);
 
 		// Help
-		helpmain = new JMenuItem("帮助主题");
+		helpmain = new JMenuItem("帮助");
 		helpin = new JMenuItem("关于OnePad");
 		// Help
 		helpin.addActionListener(this);
@@ -135,16 +135,16 @@ public class Menupad extends JFrame implements ActionListener {
 		help.add(helpin);
 
 		// Stroke
-		strokeitem = new JMenuItem("设置画笔");
+		strokeitem = new JMenuItem("设置画笔粗细");
 		strokeitem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		stroke.add(strokeitem);
 		strokeitem.addActionListener(this);
 
 		// Edit
-		editgraph = new JMenuItem("编辑图形");
-		editcolor = new JMenuItem("更改颜色");
-		editstroke = new JMenuItem("更改线型");
-		edittext = new JMenuItem("编辑文字");
+		editgraph = new JMenuItem("更改图形大小");
+		editcolor = new JMenuItem("更改图形颜色");
+		editstroke = new JMenuItem("更改直线粗细");
+		edittext = new JMenuItem("编辑文字内容");
 		// Edit
 		editgraph.addActionListener(this);
 		editcolor.addActionListener(this);

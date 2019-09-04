@@ -16,6 +16,6 @@ public class Help extends JFrame {
 
 	public void AboutBook() {
 		JOptionPane.showMessageDialog(dp, "OnePad" + "\n" + "版本: 1.0" + "\n" + "作者:    " + "\n" + "      王洪科 " + "\n"
-				+ "      刘炯驿" + "\n" + "完成时间:  2019/7月", "Draw_pad", JOptionPane.WARNING_MESSAGE);
+				+ "      刘炯驿" + "\n" + "完成时间:  2019/7月", "OnePad", JOptionPane.WARNING_MESSAGE);
 	}
 }

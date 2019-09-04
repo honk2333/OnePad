@@ -108,6 +108,7 @@ public class FileClass {
 					output.flush();// 刷新该流的缓冲。此操作将写入所有已缓冲的输出字节，并将它们刷新到底层流中。
 					// 将所有的图形信息强制的转换成父类线性化存储到文件中
 				}
+				drawarea.saven = true;
 				output.close();
 				fos.close();
 			} catch (Exception e) {

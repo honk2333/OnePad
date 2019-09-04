@@ -37,8 +37,10 @@ public class DrawArea extends JPanel {
 	String style; // 存放当前字体
 	JTextArea tarea = new JTextArea(""); // 文本框
 	int tx, ty;
+	boolean saven = false;
 
 	DrawArea(DrawPad dp) { // 构造函数
+		saven = false;
 		drawpad = dp;
 		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		// 把鼠标设置成十字形
@@ -131,10 +133,10 @@ public class DrawArea extends JPanel {
 	}
 
 	void draw(Graphics2D g2d, Drawing i) {
-		i.draw(g2d);// 将画笔传到个各类的子类中
+		i.draw(g2d);// 绘制图形，调用drawing中的对应方法
 	}
 
-	public void chooseColor()// 选择当前颜色
+	public void chooseColor()// 选择当前要绘制的图形的颜色
 	{
 		color = JColorChooser.showDialog(drawpad, "请选择颜色", color);
 		try {
@@ -181,7 +183,7 @@ public class DrawArea extends JPanel {
 
 	}
 
-	public void chooseStroke(int num)// 画笔粗细的改变,与重名的函数构成重载
+	public void chooseStroke(int num)// 直线粗细的改变,与重名的函数构成重载
 	{
 		String input;
 		input = JOptionPane.showInputDialog("请输入画笔的粗细( >0 )");
@@ -265,7 +267,7 @@ public class DrawArea extends JPanel {
 		BufferedImage bi = rb.createScreenCapture(rec);
 		int pixelColor = bi.getRGB(x, y);// 获得自定坐标的像素值
 		// pixelColor的值为负，经过实践得出：加上颜色最大值就是实际颜色值。
-		//System.out.println(pixelColor);
+		// System.out.println(pixelColor);
 		return 16777216 + pixelColor;
 		// return rb.getPixelColor(x, y);
 	}
@@ -284,17 +286,19 @@ public class DrawArea extends JPanel {
 			G = 0;
 			B = 0;
 		}
-		//System.out.println(R + " " + G + " " + B);
+		// System.out.println(R + " " + G + " " + B);
 	}
 
 	// 鼠标事件MouseA类继承了MouseAdapter，用来完成鼠标的响应事件的操作
 	class MouseA extends MouseAdapter {
 		public void mouseClicked(MouseEvent me) {
+			saven = false;
 			if (chosenStatus == 13)
 				catchcolor(me.getX(), me.getY());
 		}
 
 		public void mousePressed(MouseEvent me) { // 鼠标按下
+			saven = false;
 			if (chosenStatus >= 21 && chosenStatus <= 27) { // 删除，移动，更改大小，更改颜色，更改线型，填充六种操作都需要选定图形
 				for (pos = index - 1; pos >= 0; pos--) { // 从后到前寻找当前鼠标是否在某个图形内部
 					if (itemList[pos].IsIn(me.getX(), me.getY())) {
@@ -354,6 +358,7 @@ public class DrawArea extends JPanel {
 		}
 
 		public void mouseReleased(MouseEvent me) {
+			saven = false;
 			// 鼠标松开
 			if (chosenStatus == 23) { // 移动结束
 				if (pos >= 0) { // 鼠标成功选择了某个图形
@@ -414,6 +419,7 @@ public class DrawArea extends JPanel {
 	class MouseB extends MouseMotionAdapter {
 		public void mouseDragged(MouseEvent me) // 鼠标的拖动
 		{
+			saven = false;
 			if (chosenStatus == 1) {// 任意线的画法
 				itemList[index - 1].x1 = itemList[index].x2 = itemList[index].x1 = me.getX();
 				itemList[index - 1].y1 = itemList[index].y2 = itemList[index].y1 = me.getY();
